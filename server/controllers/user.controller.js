@@ -4,6 +4,8 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const { BlackListModel } = require('../models/blackList.model.js');
 const saltRounds = 7;
+
+// get all users list only acces for admin
 const allUsers = async (req, res) => {
     try{
         const userData = await UserModel.find();
@@ -14,10 +16,13 @@ const allUsers = async (req, res) => {
     }
 }
 
+
+// get the user profile info
 const userProfile =  async (req, res) => {
     try{
         const { id } = req.params;
         const isUser = await UserModel.findById(id);
+    
         if(isUser){
             res.status(200).json({user : isUser});
         }else{
@@ -29,12 +34,12 @@ const userProfile =  async (req, res) => {
     }
 }
 
+// cheks the user exits and verifies the password then response with 'access-token & refresh-token' for authentication
 const loginUser = async (req, res) => {
     try{
-        const {username,password} = req.body
-        const isUser = await UserModel.findOne({username:username});
+        const {email,password} = req.body
+        const isUser = await UserModel.findOne({email:email});
         if(isUser){
-           
              bcrypt.compare(password,isUser.password, (err, result) => {
                 if(err){
                     return res.status(500).json({message : err})
@@ -58,24 +63,32 @@ const loginUser = async (req, res) => {
     }
 }
 
+
+// registers the user in database only if all fields are excides in req.body then saves in db.
 const registerUser = async (req, res) => {
     try{
-        const {password} = req.body;
-        bcrypt.hash(password,saltRounds, async(err, hash) => {
-            if(err){
-                return res.status(200).json({message : err.message})
-            }else{
-                const newUser = new UserModel({...req.body,password:hash})
-                await newUser.save();
-                res.status(200).json({message : 'user successfully registered'})
-            }
-        })
+        const {username,email,interests,age,role,password} = req.body;
+        if(username && email && interests.length > 0 && age && role && password){
+            bcrypt.hash(password,saltRounds, async(err, hash) => {
+                if(err){
+                    return res.status(500).json({message : err.message})
+                }else{
+                    const newUser = new UserModel({...req.body,password:hash})
+                    await newUser.save();
+                    res.status(200).json({message : 'user successfully registered'})
+                }
+            })
+        }else{
+            res.status(400).json({message : 'all fields are required'})
+        }
 
     }catch(error){
         res.status(500).json({message : error.message})
     }
 }
 
+
+// logout the user with removing the token access and saving the token in blacklist.
 const logoutUser = async (req, res) => {
     try{
         const token = req.headers.authorization.split(" ")[1];
@@ -88,6 +101,7 @@ const logoutUser = async (req, res) => {
     }
 }
 
+// for to update the user details.
 const updateUser = async (req, res) => {
     try{
         const { id } = req.params;
@@ -104,6 +118,8 @@ const updateUser = async (req, res) => {
     }
 }
 
+
+// removes the user from db if exists.
 const deleteUser = async ( req,res) => {
     try{
         const { id } = req.params;
@@ -129,3 +145,4 @@ module.exports = {
     registerUser,
     updateUser
 }
+
