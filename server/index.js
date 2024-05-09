@@ -6,16 +6,16 @@ const { quizRouter } = require('./routes/quize.route');
 const app = express();
 require('dotenv').config()
 app.use(express.json())
+
+app.use(cors());
+
 app.get('/', (req,res) => {
     res.status(200).json({message : 'hello world'})
 })
 
-app.use(express.json());
-app.use(cors());
-
 app.use("/quiz",quizRouter);
-
 app.use('/users',userRouter)
+
 app.listen(process.env.PORT, async() => {
     try{
     console.log(`Server is running on port ${process.env.PORT}`);
