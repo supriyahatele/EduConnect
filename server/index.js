@@ -5,6 +5,7 @@ const cors = require("cors");
 const { quizRouter } = require("./routes/quize.route");
 const { assignmentRouter } = require("./routes/assignment.route");
 const { submissionRouter } = require("./routes/submission.route");
+const { videoRouter } = require("./routes/video.router");
 const app = express();
 require("dotenv").config();
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use("/quiz", quizRouter);
 app.use("/users", userRouter);
 app.use("/assignments", assignmentRouter);
 app.use("/submissions", submissionRouter);
+app.use('/videos', videoRouter);
 
 app.listen(process.env.PORT, async () => {
   try {

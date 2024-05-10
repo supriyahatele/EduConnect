@@ -7,7 +7,7 @@ const s3Client = new S3Client({
     region: "ap-southeast-2",
     credentials: {
         accessKeyId: process.env.ACCESSKEYID,
-        secretAccessKey: process.env.SECRETACCESSKEY,
+        secretAccessKey: process.env.ACCESSKEY,
     }
 })
 
@@ -26,7 +26,7 @@ const allVideos = async (req,res) => {
 const uploadVideo = async (req,res) => {
     try{
         const videoName = `video-${Date.now()}.mp4`
-        console.log({...req.body});
+        
         const filePath = req.file.path;
         const uploadParams = {
             Bucket: 'educonnect',
@@ -34,9 +34,10 @@ const uploadVideo = async (req,res) => {
             Body: fs.createReadStream(filePath),
             ContentType: 'video/mp4'
         };
+       
         await s3Client.send(new PutObjectCommand(uploadParams));
         const videoUrl = `${process.env.AWS_BUCKET_URL}${videoName}`;
-        console.log(videoUrl);
+       
         const newVideo = new VideoModel({...req.body,videoUrl})
         await newVideo.save();
 
