@@ -2,7 +2,7 @@ const express = require("express");
 const { connectionToDB } = require("./config/dbConfig");
 const { userRouter } = require("./routes/user.router");
 const cors = require("cors");
-const { quizRouter } = require("./routes/quize.route");
+const { quizRouter } = require("./routes/quiz.route");
 const { assignmentRouter } = require("./routes/assignment.route");
 const { submissionRouter } = require("./routes/submission.route");
 const { videoRouter } = require("./routes/video.router");
@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
 app.use("/quiz", quizRouter);
 app.use("/users", userRouter);
 
-app.use("/assignments", assignmentRouter);
+// app.use("/assignments", assignmentRouter);
 app.use("/submissions", submissionRouter);
 app.use("/courses", courseRouter);
 // app.use("/videos", videoRouter);
