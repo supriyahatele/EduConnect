@@ -10,7 +10,7 @@ const { courseRouter } = require("./routes/course.route");
 const app = express();
 require("dotenv").config();
 app.use(express.json());
-
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.get("/", (req, res) => {
@@ -22,8 +22,8 @@ app.use("/users", userRouter);
 
 app.use("/assignments", assignmentRouter);
 app.use("/submissions", submissionRouter);
-app.use('/videos', videoRouter);
 app.use("/courses", courseRouter);
+// app.use("/videos", videoRouter);
 
 app.listen(process.env.PORT, async () => {
   try {

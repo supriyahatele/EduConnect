@@ -2,6 +2,7 @@ const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const { VideoModel } = require("../models/video.model");
 require('dotenv').config();
 const fs = require('fs');
+const { CourseModel } = require("../models/course.model");
 
 const s3Client = new S3Client({
     region: "ap-southeast-2",
@@ -13,8 +14,11 @@ const s3Client = new S3Client({
 
 const allVideos = async (req,res) => {
     try{
-        const course = req.course;
-        const videos = await VideoModel.find({course})
+        const {id} = req.params;
+        console.log("course :",req.params);
+        const videos = await VideoModel.find({course_id:id})
+        console.log(videos);
+       
         res.status(200).json(videos);
 
     }catch(error){
@@ -25,8 +29,8 @@ const allVideos = async (req,res) => {
 
 const singleVideo = async ( req,res) => {
     try{
-        const {id} = req.params;
-        const isVideo = await VideoModel.findById(id);
+        const {video_id} = req.params;
+        const isVideo = await VideoModel.findById(video_id);
         if(isVideo) {
             res.status(200).json(isVideo);
         }else{
@@ -49,11 +53,11 @@ const uploadVideo = async (req,res) => {
             Body: fs.createReadStream(filePath),
             ContentType: 'video/mp4'
         };
-       
+        const {id} = req.params
         await s3Client.send(new PutObjectCommand(uploadParams));
         const videoUrl = `${process.env.AWS_BUCKET_URL}${videoName}`;
        
-        const newVideo = new VideoModel({...req.body,videoUrl})
+        const newVideo = new VideoModel({...req.body,videoUrl,course_id:id})
         await newVideo.save();
 
         res.status(201).json({message : 'successfully uploaded video'})
@@ -64,10 +68,10 @@ const uploadVideo = async (req,res) => {
 }
 const updateVideo = async () => {
     try{
-        const {id} = req.params;
-        await VideoModel.findByIdAndUpdate(id,req.body);
+        const {video_id} = req.params;
+        await VideoModel.findByIdAndUpdate(video_id,req.body);
         const updatedVideo = await VideoModel.findById(id);
-        res.status(200).json(updateVideo)
+        res.status(200).json(updatedVideo)
 
     }catch(error){
         res.status(500).json({message : error.message});
@@ -93,3 +97,5 @@ module.exports = {
     updateVideo,
     deleteVideo
 }
+
+
