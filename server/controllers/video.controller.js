@@ -18,9 +18,24 @@ const allVideos = async (req,res) => {
         res.status(200).json(videos);
 
     }catch(error){
-
+        res.status(500).json({error: error.message});
     }
 
+}
+
+const singleVideo = async ( req,res) => {
+    try{
+        const {id} = req.params;
+        const isVideo = await VideoModel.findById(id);
+        if(isVideo) {
+            res.status(200).json(isVideo);
+        }else{
+            res.status(404).json({error: 'Not Found'});
+        }
+
+    }catch(error){
+        res.status(500).json({error: error.message});
+    }
 }
 
 const uploadVideo = async (req,res) => {
@@ -49,23 +64,31 @@ const uploadVideo = async (req,res) => {
 }
 const updateVideo = async () => {
     try{
+        const {id} = req.params;
+        await VideoModel.findByIdAndUpdate(id,req.body);
+        const updatedVideo = await VideoModel.findById(id);
+        res.status(200).json(updateVideo)
 
     }catch(error){
-
+        res.status(500).json({message : error.message});
     }
 
 }
 
 const deleteVideo = async () => {
     try{
+        const {id} = req.params;
+        await VideoModel.findByIdAndDelete(id);
+        res.status(200).json({message : 'Deleted video successfully'})
 
     }catch(error){
-
+        res.status(500).json({message : error.message});
     }
 }
 
 module.exports = {
     allVideos,
+    singleVideo,
     uploadVideo,
     updateVideo,
     deleteVideo

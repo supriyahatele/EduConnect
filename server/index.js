@@ -18,6 +18,7 @@ app.get("/", (req, res) => {
 
 app.use("/quiz", quizRouter);
 app.use("/users", userRouter);
+
 app.use("/assignments", assignmentRouter);
 app.use("/submissions", submissionRouter);
 app.use('/videos', videoRouter);

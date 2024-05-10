@@ -11,15 +11,15 @@ const videoRouter = express.Router();
 const upload = multer({ dest: 'uploads/' });
 
 
-videoRouter.get('/',auth, isEnrolled, allVideos)
+videoRouter.get('/',auth, allVideos)
 
+videoRouter.get('/:id', auth, singleVideo)
 
-videoRouter.post('/uploads', upload.single('video'), uploadVideo)
+videoRouter.post('/uploads',auth,access('educator'), upload.single('video'), uploadVideo)
 
+videoRouter.patch('/:id', auth, access('educator'), updateVideo)
 
-// videoRouter.patch('/:id', auth, access('educator'), updateVideo)
-
-// videoRouter.delete('/:id', auth, access('educator'), deleteVideo)
+videoRouter.delete('/:id', auth, access('educator'), deleteVideo)
 
 module.exports = {
     videoRouter
