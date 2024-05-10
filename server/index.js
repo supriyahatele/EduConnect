@@ -6,6 +6,7 @@ const { quizRouter } = require("./routes/quize.route");
 const { assignmentRouter } = require("./routes/assignment.route");
 const { submissionRouter } = require("./routes/submission.route");
 const { videoRouter } = require("./routes/video.router");
+const { courseRouter } = require("./routes/course.route");
 const app = express();
 require("dotenv").config();
 app.use(express.json());
@@ -22,6 +23,7 @@ app.use("/users", userRouter);
 app.use("/assignments", assignmentRouter);
 app.use("/submissions", submissionRouter);
 app.use('/videos', videoRouter);
+app.use("/courses", courseRouter);
 
 app.listen(process.env.PORT, async () => {
   try {
