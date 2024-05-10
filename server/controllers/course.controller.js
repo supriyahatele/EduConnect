@@ -19,6 +19,7 @@ const allCourse = async (req, res) => {
 const courseById =  async (req, res) => {
     try{
         const { id } = req.params;
+      
         const course = await CourseModel.findById(id);
     
         if(course){
