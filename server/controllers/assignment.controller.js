@@ -1,11 +1,14 @@
 const { AssignmentModel } = require("../models/assignment.model");
+const { CourseModel } = require("../models/course.model");
 
 const getAssignment = async(req,res)=>{
+    const {id}=req.params;
     const page = req.query.page || 1;
     const size = req.query.size || 10;
     const skip = (page - 1) * size;
+    // console.log(id);
     try {
-        const isAssignment = await AssignmentModel.find().skip(skip).limit(size);
+        const isAssignment = await AssignmentModel.find({courseID:id}).skip(skip).limit(size);
         res.status(201).json({assignment:isAssignment});
     } catch (error) {
        console.log(error); 
@@ -14,9 +17,13 @@ const getAssignment = async(req,res)=>{
 }
 
 const addAssignment = async(req,res)=>{
-    const{title,description,userID,username,course}=req.body;
     try {
-        const newAssignment = new AssignmentModel({title,description,userID,username,course});
+        const {id}=req.params;
+        const{title,description}=req.body;
+        const isCourse = await CourseModel.findById(id);
+        const userID = req.id;
+        const username= req.user;
+        const newAssignment = new AssignmentModel({title,description,userID,username,course:isCourse.courseName,courseID:id});
         await newAssignment.save();
         res.status(201).json({msg:"You're added new assignment Successfully!"});
         

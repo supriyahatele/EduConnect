@@ -4,9 +4,10 @@ const assignmentSchema = mongoose.Schema(
   {
     title: { type: String, required: true, unique: true },
     description: { type: String, required: true },
-    userID: { type: String },
+    userID: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     username: { type: String },
     course: { type: String },
+    courseID:{type: mongoose.Schema.Types.ObjectId, ref: "Course"},
     assigningTime: {
       type: String,
       default: () => {
