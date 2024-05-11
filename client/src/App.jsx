@@ -10,6 +10,7 @@ function App() {
     <>
       <Navbar />
       <Allroutes />
+      <img src="/EduConnect/server/uploads/Screenshot (260).png"/>
     </>
   )
 }

@@ -1,29 +1,42 @@
 // Import necessary modules and models
 const express = require('express');
 const { EnrollmentModel } = require('../models/enrollment.model');
+const { CourseModel } = require('../models/course.model');
+const { auth } = require('../middlewares/auth.middleware');
 const EnrollmentRouter = express.Router();
 
 
 // Make Payment (Enroll in a Course)
-EnrollmentRouter.post('/enroll', async (req, res) => {
+EnrollmentRouter.post('/enroll',auth, async (req, res) => {
     try {
-        const { studentID, courseID, paymentMethod,price,status } = req.body;
-        const checkEnrollment= EnrollmentModel.findOne({studentID, courseID})
+        const { courseID, paymentMethod,price,status } = req.body;
+        const id=req.id
+        const checkEnrollment= await  EnrollmentModel.findOne({studentID:id, courseID})
+       
         if(checkEnrollment){
           return   res.status(201).json({ message: 'you have already enrolled for this ' });  
         }
         const enroll = new EnrollmentModel({
-            studentID,
+            studentID :id,
             courseID,
             paymentMethod,
             price,
             status  
         });
         await enroll.save();
-
-       return res.status(201).json({ message: 'Payment successful. Enrolled in course.' });
+        const checkCourse = await CourseModel.findOneAndUpdate(
+            { _id: courseID },
+            { $push: { students: id } },
+            { new: true }
+        );
+        
+        if (!checkCourse) {
+            return res.status(404).json({ message: 'Course not found.' });     
+        }
+        
+        return res.status(201).json({ message: 'Payment successful. Enrolled in course.' });
     } catch (error) {
-        console.error('Error making payment:', error);
+        console.error('Error making payment:', error.stack);
        return res.status(500).json({ message: 'Failed to make payment' });
     }
 });

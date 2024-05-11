@@ -6,6 +6,9 @@ const CourseSchema = mongoose.Schema({
     price : { type : Number , required : true },
     students: { type: [mongoose.Schema.Types.ObjectId], ref: "User" },
     techStack  : { type : [String] },
+    imageUrl:{ type:String },
+    rating:{ type:Number},
+    reviews:{type:Number}
 },{
     versionKey : false,
     timestamps: true,
