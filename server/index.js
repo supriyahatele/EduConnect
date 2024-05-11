@@ -7,10 +7,11 @@ const { assignmentRouter } = require("./routes/assignment.route");
 const { submissionRouter } = require("./routes/submission.route");
 const { videoRouter } = require("./routes/video.router");
 const { courseRouter } = require("./routes/course.route");
+const { EnrollmentRouter } = require("./routes/enrollment.route");
 const app = express();
 require("dotenv").config();
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
 app.use(cors());
 
 app.get("/", (req, res) => {
@@ -19,11 +20,11 @@ app.get("/", (req, res) => {
 
 app.use("/quiz", quizRouter);
 app.use("/users", userRouter);
-
-// app.use("/assignments", assignmentRouter);
+app.use("/assignments", assignmentRouter);
 app.use("/submissions", submissionRouter);
+app.use('/videos', videoRouter);
 app.use("/courses", courseRouter);
-// app.use("/videos", videoRouter);
+app.use("/enrollments", EnrollmentRouter);
 
 app.listen(process.env.PORT, async () => {
   try {

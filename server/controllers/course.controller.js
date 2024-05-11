@@ -1,9 +1,8 @@
 const { CourseModel } = require("../models/course.model");
-
-
-
-
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+require('dotenv').config();
 // get all course list only acces for admin
+
 const allCourse = async (req, res) => {
     try{
         const courseData = await CourseModel.find();
@@ -39,9 +38,14 @@ const courseById =  async (req, res) => {
 // createCourse
 const createCourse = async (req, res) => {
     try{
-        const {courseName,educator,price,techStack} = req.body;
-        if(courseName && educator && techStack.length > 0 && price ){
-            const newUser = new CourseModel({...req.body})
+        const {courseName,educator,price,techStack,rating,reviews} = req.body;
+        const file=req.file
+
+        if(courseName && educator && techStack.length > 0 && price&& file &&rating && reviews ){
+            let uploadedFileURL= await uploadFile(file)
+            console.log(uploadedFileURL)
+            const newUser = new CourseModel({...req.body, imageUrl:uploadedFileURL})
+            // console.log(newUser)
             await newUser.save(); 
         res.status(201).json({message : 'course added  successfully '})
             
@@ -91,11 +95,46 @@ const deleteCourse = async ( req,res) => {
     }
 }
 
+
+const s3Client = new S3Client({
+    region: "ap-southeast-2",
+    credentials: {
+        accessKeyId: process.env.ACCESSKEYID,
+        secretAccessKey: process.env.ACCESSKEY,
+    }
+})
+
+
+async function uploadFile(file) {
+    try {
+        // Prepare parameters for uploading the file
+        const uploadParams = {
+            Bucket: "educonnect",
+            Key: "CourseImage/" + file.originalname,
+            Body: file.buffer 
+        };
+
+        // Upload the file to S3
+        const command = new PutObjectCommand(uploadParams);
+        const response = await s3Client.send(command);
+
+        console.log(response);
+        console.log("File uploaded successfully");
+
+        return response.Location; // Return the URL of the uploaded file
+    } catch (error) {
+        console.error("Error uploading file:", error);
+        throw error;
+    }
+}
+
+
 module.exports = {
     allCourse,
     createCourse,
     courseById,
     deleteCourse,
-    updateCourse
+    updateCourse,
+    uploadFile
 }
 
