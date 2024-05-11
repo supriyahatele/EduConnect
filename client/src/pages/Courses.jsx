@@ -1,9 +1,8 @@
-import React from 'react'
 
-function Courses() {
+
+const Courses = () => {
   return (
     <div>
-      Courses
     </div>
   )
 }
