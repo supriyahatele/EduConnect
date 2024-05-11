@@ -44,7 +44,7 @@ courseRouter.post("/Course",upload.single('file'), createCourse);
 courseRouter.get("/", allCourse);
 
 // to get profile of the user -- user details
-courseRouter.get("/:id",auth, courseById);
+courseRouter.get("/:id",courseById);
 
 // to update the user details
 
