@@ -3,6 +3,8 @@ import { Box, Button, Center, Container, Flex, Grid, HStack, Heading, Image, Sim
 import { extendTheme } from '@chakra-ui/react'
 
 function Home() {
+  const {authUser} = useContext(AuthContext);
+  console.log(authUser);
   const breakpoints = {
     base: '0px',
     sm: '320px',
