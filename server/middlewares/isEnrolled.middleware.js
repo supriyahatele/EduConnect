@@ -1,10 +1,10 @@
 const isEnrolled = async (req,res,next) => {
     try{
-        const {course_id} = req.params;
-        const id = req.id;
+        const course_id = req.params.id;
+        const user_id = req.id;
         const isCourse = await CourseModel.findById(course_id);
         if(isCourse){
-            const isStudentEntrolled = isCourse.students.includes(id);
+            const isStudentEntrolled = isCourse.students.includes(user_id);
             if(isStudentEntrolled){
                 next();
             }else{
