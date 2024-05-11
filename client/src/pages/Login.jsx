@@ -1,9 +1,11 @@
 import  { useContext, useState } from 'react';
-import { Box, Center,Image, VStack, FormControl, Input, Button, Text, Icon, Heading } from '@chakra-ui/react';
-import { EmailIcon, LockIcon } from '@chakra-ui/icons'; 
+import { Box,Image, VStack, FormControl, Input, Button, Text, Heading, InputGroup, InputLeftElement } from '@chakra-ui/react';
+
 import { Link, useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import { AuthContext } from '../Contexts/AuthContextProvider';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
 const Login= () => {
   const navigate = useNavigate()
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -53,6 +55,8 @@ const Login= () => {
           <VStack spacing={4} align="stretch">
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
               <FormControl isRequired>
+                <InputGroup>
+              <InputLeftElement pointerEvents="none" children={<FontAwesomeIcon icon={faEnvelope} color="gray.300" />} />
                 <Input
                   type="email"
                   name="email"
@@ -64,10 +68,13 @@ const Login= () => {
                   borderBottom={'1px solid aliceblue'}
                   _placeholder={{ color: 'inherit' }}
                   placeholder="Enter your email"
-                  leftIcon={<EmailIcon color="gray" />}
+                  
                 />
+                </InputGroup>
               </FormControl>
               <FormControl isRequired>
+                <InputGroup>
+                <InputLeftElement pointerEvents="none" children={<FontAwesomeIcon icon={faLock} color="gray.300" />} />
                 <Input
                   type="password"
                   name="password"
@@ -78,8 +85,9 @@ const Login= () => {
                   onBlur={handleBlur}
                   _placeholder={{ color: 'inherit' }}
                   placeholder="Enter your password"
-                  leftIcon={<LockIcon color="gray.500" />}
+                  
                 />
+                </InputGroup>
               </FormControl>
               <Button type="submit" w={'100%'} bgColor={'orangered'} color={'white'} mt="2" alignSelf="flex-start">
                 Login

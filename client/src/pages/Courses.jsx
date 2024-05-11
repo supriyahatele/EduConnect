@@ -11,8 +11,8 @@ function Courses() {
     console.log('useEffect called')
   }, []);
 // console.log(state)
-  {isError && <h1>someThing went wrong...</h1>};
- { isLoading && <h1>Loading ...</h1>};
+  {isError && <h1>someThing went wrong...</h1>}
+ { isLoading && <h1>Loading ...</h1>}
 
   return (
     <Box width={"90%"} margin={"auto"} textAlign={"center"}>

@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Box, VStack, FormControl, FormLabel, Input, Checkbox, CheckboxGroup, Select, Button, Heading, Text, Image, InputLeftElement, InputGroup } from '@chakra-ui/react';
+import { Box, FormControl, FormLabel, Input, Checkbox, CheckboxGroup, Select, Button, Heading, Text, Image, InputLeftElement, InputGroup } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { extendTheme } from '@chakra-ui/react'
@@ -46,9 +46,10 @@ const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:3000/register', formData)
+    axios.post('http://localhost:3000/users/register', formData)
     .then(res => {
       if(res.data.message ){
+        console.log(res.data.message);
         navigate('/login')
       }else{
         console.log(res.data.error);
