@@ -1,8 +1,11 @@
-import React from 'react'
+import { useContext } from 'react'
+import { AuthContext } from '../Contexts/AuthContextProvider'
 import {Box, Button, Center, Grid, Image, Text} from '@chakra-ui/react';
 import { extendTheme } from '@chakra-ui/react'
 
 function Home() {
+  const {authUser} = useContext(AuthContext);
+  console.log(authUser);
   const breakpoints = {
     base: '0px',
     sm: '320px',
