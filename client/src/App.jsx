@@ -9,8 +9,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <Allroutes />
-      <img src="/EduConnect/server/uploads/Screenshot (260).png"/>
+      <Allroutes /> 
     </>
   )
 }
