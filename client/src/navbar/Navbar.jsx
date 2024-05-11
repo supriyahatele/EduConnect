@@ -1,8 +1,9 @@
 
 
-import React, { useState } from 'react';
-import { Box, Image } from '@chakra-ui/react';
+import React, { useContext, useState } from 'react';
+import { Box, Button, Image } from '@chakra-ui/react';
 import { Link, NavLink } from 'react-router-dom';
+import { AuthContext } from '../Contexts/AuthContextProvider';
 
 const pages = [
     { id: 1, to: "/", name: "Home" },
@@ -13,11 +14,7 @@ const pages = [
 ];
 
 function Navbar() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    const handleLoginClick = () => {
-        setIsLoggedIn(!isLoggedIn);
-    };
+  const {authUser,logoutUser} = useContext(AuthContext)
 
     return (
         <>
@@ -38,9 +35,8 @@ function Navbar() {
                         {el.name}
                     </NavLink>
                 ))}
-                <NavLink
-                    to={isLoggedIn ? "/logout" : "/login"}
-                    onClick={handleLoginClick}
+                {authUser.token ? <Button
+                    onClick={()=>logoutUser()}
                     style={{
                         display: "inline-block",
                         padding: "8px 20px",
@@ -54,8 +50,13 @@ function Navbar() {
                         transition: "box-shadow 0.3s",
                     }}
                 >
-                    {isLoggedIn ? "Logout" : "Login"}
-                </NavLink>
+                    Logout
+                </Button> : <NavLink to='/login'  style={({ isActive }) => ({
+                            color: isActive
+                                ? "#196ae5"
+                                : "Black",
+                            fontWeight: "600",
+                        })}>Login</NavLink>}
             </Box>
         </>
     )

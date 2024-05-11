@@ -12,7 +12,7 @@ const allUsers = async (req, res) => {
         res.status(200).json(userData);
 
     }catch(error){
-        res.status(500).json({message : error.message})
+        res.status(500).json({error : error.message})
     }
 }
 
@@ -26,11 +26,11 @@ const userProfile =  async (req, res) => {
         if(isUser){
             res.status(200).json({user : isUser});
         }else{
-            res.status(404).json({message : 'User not found'})
+            res.status(404).json({error : 'User not found'})
         }
 
     }catch(error){
-        res.status(500).json({message : error.message})
+        res.status(500).json({error : error.message})
     }
 }
 
@@ -42,24 +42,24 @@ const loginUser = async (req, res) => {
         if(isUser){
              bcrypt.compare(password,isUser.password, (err, result) => {
                 if(err){
-                    return res.status(500).json({message : err})
+                    return res.status(500).json({error : err})
                 }else{
                     if(result){
                        
-                        const accessToken = jwt.sign({id : isUser._id, role : isUser.role}, process.env.PRIVATE_KEY,{expiresIn :  '1h'})
-                        const refreshToken = jwt.sign({id : isUser._id, role : isUser.role}, process.env.PRIVATE_KEY,{expiresIn : '1d'})
+                        const accessToken = jwt.sign({id : isUser._id, username:isUser.username,role : isUser.role}, process.env.PRIVATE_KEY,{expiresIn :  '1h'})
+                        const refreshToken = jwt.sign({id : isUser._id, username:isUser.username,role : isUser.role}, process.env.PRIVATE_KEY,{expiresIn : '1d'})
                         res.status(200).json({accessToken , refreshToken })
                     }else{
-                        res.status(200).json({message : 'wrong password'})
+                        res.status(200).json({error : 'wrong password'})
                     }
                 }
              })
         }else{
-            res.status(200).json({message : 'wrong username'})
+            res.status(200).json({error : 'wrong username'})
         }
 
     }catch(error){
-        res.status(500).json({message : error.message})
+        res.status(500).json({error : error.message})
     }
 }
 
@@ -71,7 +71,7 @@ const registerUser = async (req, res) => {
         if(username && email && interests.length > 0 && age && role && password){
             bcrypt.hash(password,saltRounds, async(err, hash) => {
                 if(err){
-                    return res.status(500).json({message : err.message})
+                    return res.status(500).json({error : err.message})
                 }else{
                     const newUser = new UserModel({...req.body,password:hash})
                     await newUser.save();
@@ -79,11 +79,11 @@ const registerUser = async (req, res) => {
                 }
             })
         }else{
-            res.status(400).json({message : 'all fields are required'})
+            res.status(400).json({error : 'all fields are required'})
         }
 
     }catch(error){
-        res.status(500).json({message : error.message})
+        res.status(500).json({error : error.message})
     }
 }
 
