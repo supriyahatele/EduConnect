@@ -1,27 +1,57 @@
-const express = require('express');
-
+const express = require("express");
+const multer = require("multer");
 const courseRouter = express.Router();
+const upload = multer({ dest: "uploads/" });
 
-const { auth } = require('../middlewares/auth.middleware');
-const { access } = require('../middlewares/access.middleware');
-const { createCourse, allCourse, courseById, updateCourse, deleteCourse } = require('../controllers/course.controller');
+const { auth } = require("../middlewares/auth.middleware");
+const { access } = require("../middlewares/access.middleware");
+const { isEnrolled } = require("../middlewares/isEnrolled.middleware") 
+const {
+  createCourse,
+  allCourse,
+  courseById,
+  updateCourse,
+  deleteCourse,
+} = require("../controllers/course.controller");
+const {
+  allVideos,
+  uploadVideo,
+  updateVideo,
+  deleteVideo,
+  singleVideo,
+} = require("../controllers/video.controller");
+const { getAssignment, addAssignment } = require("../controllers/assignment.controller");
 
-// to create course 
-courseRouter.post('/Course',createCourse )
+// to create course
+courseRouter.post("/Course",auth,access('educator'), createCourse);
 
 // to get all the users -- access to admin only
-courseRouter.get('/', allCourse)
+courseRouter.get("/", allCourse);
 
 // to get profile of the user -- user details
-courseRouter.get('/:id',courseById )
+courseRouter.get("/:id",auth, courseById);
 
 // to update the user details
 
-courseRouter.patch('/:id', updateCourse )
+courseRouter.patch("/:id",auth,access('educator'), updateCourse);
 
 // to delete the user
-courseRouter.delete('/:id', deleteCourse)
+courseRouter.delete("/:id",auth,access('educator'), deleteCourse);
+
+courseRouter.get("/:id/videos",auth,isEnrolled, allVideos);
+
+courseRouter.get("/:id/videos/:video_id",auth,isEnrolled, singleVideo);
+
+courseRouter.post("/:id/videos/uploads", upload.single("video"),auth,access('educator'), uploadVideo);
+
+courseRouter.patch("/:id/videos/:video_id",auth,access("educator"),updateVideo);
+
+courseRouter.delete("/:id/videos/:video_id",auth,access("educator"),deleteVideo);
+
+courseRouter.get("/:id/getAssignment", auth,isEnrolled, getAssignment);
+
+courseRouter.post("/:id/createAssignment",auth,access("educator"),addAssignment);
 
 module.exports = {
-    courseRouter
-}
+  courseRouter,
+};
