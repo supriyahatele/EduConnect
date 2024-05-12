@@ -3,9 +3,11 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useContext } from "react";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { AuthContext } from "../Contexts/AuthContextProvider";
 
 const SingleCourse = () => {
+    const navigate=useNavigate()
     const {authUser} = useContext(AuthContext)
   const { id } = useParams();
   const [course, setCourse] = useState(null);
@@ -38,7 +40,7 @@ const SingleCourse = () => {
         'Authorization' : `Bearer ${authUser.token}`
       }
     });
-    
+    navigate("/courses")
   };
 
   return (
@@ -63,9 +65,9 @@ const SingleCourse = () => {
             value={selectedPaymentMethod}
             onChange={handlePaymentMethodChange}
           >
-            <option value="debit_card">Debit Card</option>
-            <option value="credit_card">Credit Card</option>
-            <option value="upi_id">UPI ID</option>
+            <option value="debitCard">Debit Card</option>
+            <option value="creditCard">Credit Card</option>
+            <option value="upiID">UPI ID</option>
           </Select>
           <Button onClick={handleSubmitEnrollment}>Enroll</Button>
         </Box>
