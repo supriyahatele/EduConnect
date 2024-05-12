@@ -61,7 +61,7 @@ const courseById =  async (req, res) => {
 // createCourse
 const createCourse = async (req, res) => {
     try{
-        const {courseName,educator,price,techStack,imageUrl,rating,reviews,imageUrl} = req.body;
+        const {courseName,educator,price,techStack,imageUrl,rating,reviews} = req.body;
         // 
 
         console.log(req.body);

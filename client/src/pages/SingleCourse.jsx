@@ -1,18 +1,21 @@
 
-import { Box, Button, Center, Image, Select } from "@chakra-ui/react";
+import { Box, Button, Center, Image, Select, useDisclosure } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useContext } from "react";
+import  { useContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../Contexts/AuthContextProvider";
 import { useDispatch, useSelector } from "react-redux";
 import { getCourseFailure, getCourseLoading, getCourseSuccess } from "../redux/actionTypes";
+import { UpdateCourse } from "../components/UpdateCourse";
 
 const SingleCourse = () => {
     const navigate=useNavigate()
     const {authUser} = useContext(AuthContext)
   const { id } = useParams();
+  const {isOpen,onOpen,onClose} = useDisclosure()
+
 const dispatch=useDispatch()
 const { isLoading,isError,course } = useSelector((state) => state.singleCourse);
   const [showEnrollForm, setShowEnrollForm] = useState(false);
@@ -47,7 +50,7 @@ const { isLoading,isError,course } = useSelector((state) => state.singleCourse);
   const handlePaymentMethodChange = (event) => {
     setSelectedPaymentMethod(event.target.value);
   };
-
+  
   const handleSubmitEnrollment = async () => {
     // Perform enrollment with selected payment method
     await axios.post(`http://localhost:3000/enrollments/enroll`, 
@@ -61,6 +64,8 @@ const { isLoading,isError,course } = useSelector((state) => state.singleCourse);
     navigate("/courses")
   };
 
+
+
   if(isLoading) return <Center>loading</Center>
   if(isError) return <Center>error</Center>
 
@@ -70,6 +75,15 @@ const { isLoading,isError,course } = useSelector((state) => state.singleCourse);
         <Link to='assignments'>assignments</Link>
         <Link to='videos'>videos</Link>
       </Box>
+      {authUser.role === 'educator' && <Box textAlign={'right'} mr={'30px'} > <Button mr={'40px'} color={'white'} m={'auto'} p={3} bgColor={'blue.600'} onClick={onOpen}>Edit</Button></Box>}
+      <>
+       
+        {isOpen && (
+          <UpdateCourse isOpen={isOpen} onClose={onClose} course={course} />
+        )}
+      </>
+
+
       <Box textAlign={'center'}>
     
 {/* //         <h1>{course?.courseName}</h1>

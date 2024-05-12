@@ -42,11 +42,20 @@ const Videos = () => {
       })
 
     },[id,authUser])
+    const addVideo = (payload) => {
+      setVideos(prev => ({
+        ...prev,
+        isLoading: false,
+        isError:false,
+        data : [...prev.data,payload]
+      }))
+
+    }
     if(videos.isLoading) return <h1>loading</h1>
     if(videos.isError) return <h2>error</h2>
   return (
     <>
-    <VideoList videos={videos.data}/>
+    <VideoList videos={videos.data} addVideo={addVideo}/>
     </>
    
   )

@@ -1,5 +1,5 @@
 
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCourses } from "../redux/action";
 import { Box, Button, Heading, useDisclosure, Image,Input,Select,Text } from "@chakra-ui/react";
@@ -7,8 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { CourseCreate } from "../components/CourseCreate";
 import { postCourse } from '../redux/action';
 import { useState } from "react";
+import { AuthContext } from "../Contexts/AuthContextProvider";
 function Courses() {
   const navigate = useNavigate();
+  const {authUser} = useContext(AuthContext)
   const dispatch = useDispatch();
   const {isOpen,onOpen,onClose} = useDisclosure()
   const { isError, isLoading, courses } = useSelector((state) => state.Courses);
@@ -49,11 +51,22 @@ function Courses() {
     navigate(`/courses/${id}`);
 
   };
+
   console.log(courses);
   if(isLoading ) return <div>loading...</div>
   if(isError) return <div>error</div>
   return (
     <Box width={"90%"} margin={"auto"}textAlign={"center"} >
+    {authUser.role === 'educator' && (
+  <>
+    <Button onClick={onOpen} mt={4}>
+      Add Course
+    </Button>
+    {isOpen && (
+      <CourseCreate isOpen={isOpen} onClose={onClose} handleAddCourse={handleAddCourse} />
+    )}
+  </>
+)}
       <Box display={'flex'} width={"45%"} margin={"auto"} gap={"30px"} mt={"30px"} mb={"20px"}>
       <Box >
         <Input
@@ -82,8 +95,6 @@ function Courses() {
         {page}
         <Button  ml={5}onClick={() => setPage((prev) => prev + 1)}> next</Button>
       <Heading>Courses  we offer</Heading>
-      <Button onClick={onOpen}>Add Course</Button>
-      {isOpen && <CourseCreate isOpen={isOpen} onClose = {onClose} handleAddCourse={handleAddCourse} />}
       <Box
         display={"grid"}
         gridTemplateColumns={"repeat(3,1fr)"}
@@ -112,6 +123,7 @@ function Courses() {
             <Button onClick={() => handleClick(course._id)} color={"white"} backgroundColor={"blue.400"} >
               view all details
             </Button>
+            
           </Box>
         ))}
       </Box>

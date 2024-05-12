@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { 
     Box,
     Button,
+    Center,
     FormControl,
     FormLabel,
     Input,
@@ -52,7 +53,8 @@ const CourseCreate = ({isOpen,onClose,handleAddCourse}) => {
     <Modal isOpen={isOpen} onClose={onClose}>
   <ModalOverlay /> 
   <ModalContent>
-    <Box maxW="md" mx="auto" mt={8} p={4} borderWidth="1px" borderRadius="lg">
+        <Center pt={4} color={'green'} fontWeight={'bold'}>Add Course Details</Center>
+    <Box maxW={{ base: "100%", md: "md" }} mx="auto" mt={8} p={4} borderWidth="1px" borderRadius="lg">
     <form onSubmit={handleSubmit}>
       <FormControl isRequired>
         <FormLabel>Course Name</FormLabel>
