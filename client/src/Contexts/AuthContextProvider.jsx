@@ -4,6 +4,7 @@ const InitialAuthState = {
     username : '',
     token : '',
     role:'',
+    id:''
 
 }
 export const AuthContext = createContext();
@@ -19,6 +20,7 @@ const AuthContextProvider = ({children}) => {
             token : token,
             username : decode.username,
             role : decode.role,
+            id : decode.id
         }))
        }
     },[])
@@ -31,6 +33,7 @@ const AuthContextProvider = ({children}) => {
             token : token,
             username : decode.username,
             role : decode.role,
+            id : decode.id
         }))
     }
    const logoutUser = () => {

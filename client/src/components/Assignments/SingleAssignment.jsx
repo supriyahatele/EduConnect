@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faClock, faInfoCircle, faUserCircle, faUser } from '@fortawesome/free-solid-svg-icons';
-import { Box,Button,Flex,FormLabel,Heading,IconButton,Input,Text, useDisclosure } from '@chakra-ui/react';
+import { Box,Button,Flex,FormLabel,Heading,IconButton,Input,Text, useDisclosure, useToast } from '@chakra-ui/react';
 import { useNavigate, useParams } from 'react-router-dom'
 import {
     AlertDialog,
@@ -23,6 +23,7 @@ const SingleAssignment = () => {
     const {id,assignment_id} = useParams();
     const [submittedUrl,setSubmittedUrl] = useState('');
     const navigate = useNavigate()
+    const toast = useToast()
     const url = useRef('');
     const { isOpen, onOpen, onClose } = useDisclosure()
     const {authUser} = useContext(AuthContext);
@@ -98,7 +99,14 @@ const SingleAssignment = () => {
             }
             setSubmittedUrl(url.current)
             console.log(res.data.submitted);
-            alert(res.data.msg)
+           
+            toast({
+              title: 'assignment',
+              description:res.data.msg,
+              status: 'success',
+              duration: 9000,
+              isClosable: true,
+            })
 
         })
         .catch(err => {
@@ -115,7 +123,13 @@ const SingleAssignment = () => {
         })
         .then(res => {
             if(res.data.msg){
-                alert(res.data.msg);
+              toast({
+                title: 'assignment',
+                description:res.data.msg,
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+              })
                 setSubmittedUrl(url.current)
                 return 
             }else{
@@ -186,8 +200,8 @@ const SingleAssignment = () => {
               <Button  onClick={onClose}>
                 Cancel
               </Button>
-              <Button colorScheme='red' onClick={() => {onClose();handleEditUrl()}} ml={3}>
-                Delete
+              <Button colorScheme='blue' onClick={() => {onClose();handleEditUrl()}} ml={3}>
+                Update
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
