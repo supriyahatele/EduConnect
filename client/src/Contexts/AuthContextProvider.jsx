@@ -11,7 +11,7 @@ const AuthContextProvider = ({children}) => {
     const [authUser, setAuthUser] = useState(InitialAuthState);
     useEffect(()=>{
        const token =  localStorage.getItem('token');
-       if(token){
+       if(token ){
         const decode = jwtDecode(token);
         console.log(decode);
         setAuthUser(prev => ({

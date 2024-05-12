@@ -6,13 +6,28 @@ const getAssignment = async(req,res)=>{
     const page = req.query.page || 1;
     const size = req.query.size || 10;
     const skip = (page - 1) * size;
-    // console.log(id);
+    console.log(id);
     try {
         const isAssignment = await AssignmentModel.find({courseID:id}).skip(skip).limit(size);
         res.status(201).json({assignment:isAssignment});
     } catch (error) {
        console.log(error); 
        res.status(500).json({msg:error})
+    }
+}
+
+const getSingleAssignment = async (req,res) => {
+    try{
+        const {id,assignment_id} = req.params;
+        const isAssignment = await AssignmentModel.findOne({_id:assignment_id,courseID:id})
+        if(isAssignment){
+            res.status(200).json({assignment : isAssignment})
+        }else{
+            res.status(404).json({msg : 'assignment not found'})
+        }
+
+    }catch(error){
+        res.status(500).json({msg:error});
     }
 }
 
@@ -57,4 +72,4 @@ const deleteAssignment = async(req,res)=>{
 }
 
 
-module.exports={getAssignment,addAssignment,updateAssignment,deleteAssignment}
+module.exports={getAssignment,getSingleAssignment,addAssignment,updateAssignment,deleteAssignment}
