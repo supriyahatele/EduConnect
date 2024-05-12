@@ -34,17 +34,18 @@ const getSingleAssignment = async (req,res) => {
 const addAssignment = async(req,res)=>{
     try {
         const {id}=req.params;
-        const{title,description}=req.body;
+        const{title,description,body}=req.body;
         const isCourse = await CourseModel.findById(id);
         const userID = req.id;
         const username= req.user;
-        const newAssignment = new AssignmentModel({title,description,userID,username,course:isCourse.courseName,courseID:id});
+        console.log(username);
+        const newAssignment = new AssignmentModel({title,description,userID,username,course:isCourse.courseName,courseID:id,body});
         await newAssignment.save();
-        res.status(201).json({msg:"You're added new assignment Successfully!"});
+        res.status(201).json(newAssignment);
         
     } catch (error) {
        console.log(error); 
-       res.status(500).json({msg:error})
+       res.status(500).json({error:error})
     }
 }
 
@@ -67,7 +68,7 @@ const deleteAssignment = async(req,res)=>{
         res.status(201).json({msg:"You're deleted your assignment Successfully!"});
     } catch (error) {
        console.log(error); 
-       res.status(500).json({msg:error})
+       res.status(500).json({error:error})
     }
 }
 

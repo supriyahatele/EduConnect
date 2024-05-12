@@ -1,6 +1,6 @@
-import { Box, Button, Center, Heading, Image, Select, Text } from "@chakra-ui/react";
+import { Box, Button, Center, Heading, Image, Select, useDisclosure, Text } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useContext } from "react";
+import  { useContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -11,12 +11,15 @@ import {
   getCourseLoading,
   getCourseSuccess,
 } from "../redux/actionTypes";
+import { UpdateCourse } from "../components/UpdateCourse";
 import { QuizData } from "./QuizData";
 
 const SingleCourse = () => {
   const navigate = useNavigate();
   const { authUser } = useContext(AuthContext);
   const { id } = useParams();
+  const {isOpen,onOpen,onClose} = useDisclosure()
+
   const dispatch = useDispatch();
   const { isLoading, isError, course } = useSelector(
     (state) => state.singleCourse
@@ -51,7 +54,7 @@ const SingleCourse = () => {
   const handlePaymentMethodChange = (event) => {
     setSelectedPaymentMethod(event.target.value);
   };
-
+  
   const handleSubmitEnrollment = async () => {
     // Perform enrollment with selected payment method
     await axios.post(
@@ -65,6 +68,8 @@ const SingleCourse = () => {
     );
     navigate("/courses");
   };
+
+
 
   if (isLoading) return <Center>loading</Center>;
   if (isError) return <Center>error</Center>;
@@ -81,6 +86,15 @@ const SingleCourse = () => {
             <Box width={"100%"} textAlign={"left"} >
             <Text fontSize={"18px"} fontWeight={"normal"}>Build fully functional web apps using MEAN stack. Acquire comprehensive skills in MongoDB, Express.js, Angular, and Node.js to design, develop, and deploy real-world high-performance web applications.</Text>
             </Box>
+      {authUser.role === 'educator' && <Box textAlign={'right'} mr={'30px'} > <Button mr={'40px'} color={'white'} m={'auto'} p={3} bgColor={'blue.600'} onClick={onOpen}>Edit</Button></Box>}
+      <>
+       
+        {isOpen && (
+          <UpdateCourse isOpen={isOpen} onClose={onClose} course={course} />
+        )}
+      </>
+
+
             <Text  fontSize={"18px"} mt={"10px"} fontWeight={"medium"} >{` Instructor ${course?.educator}`}</Text>
             <Text fontSize={"18px"} mt={"10px"} fontWeight={"normal"}>{`course fees:${course?.price} ₹`}</Text>
             <Text fontSize={"18px"} mt={"10px"} fontWeight={"normal"}>

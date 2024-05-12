@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faClock, faInfoCircle, faUserCircle, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Box,Button,Flex,FormLabel,Heading,IconButton,Input,Text, useDisclosure } from '@chakra-ui/react';
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import {
     AlertDialog,
     AlertDialogBody,
@@ -22,6 +22,7 @@ const initialState = {
 const SingleAssignment = () => {
     const {id,assignment_id} = useParams();
     const [submittedUrl,setSubmittedUrl] = useState('');
+    const navigate = useNavigate()
     const url = useRef('');
     const { isOpen, onOpen, onClose } = useDisclosure()
     const {authUser} = useContext(AuthContext);
@@ -131,13 +132,17 @@ const SingleAssignment = () => {
     if(assignment.isLoading) return <Box>loading</Box>
     if(assignment.isError) return <Box>error</Box>
   return (
-    <Box p={4} borderWidth="1px" borderRadius="md" boxShadow="md" >
-    <Text fontWeight="bold" fontSize="lg" mb={2}>{assignment.data.title}</Text>
-    <Text mb={2}>{assignment.data.description}</Text>
-    <Flex alignItems="center" mb={2}>
-    <FontAwesomeIcon icon={faUserCircle} />
+    <>
+    <Button m={2} size={'sm'} bgColor={'blue.600'} onClick={() => navigate(-1)}>Go Back</Button>
+    <Box p={4} borderWidth="1px" borderRadius="md" boxShadow="md" bg={"#1a202c"} color={"#fff"} >
+       <Flex alignItems="center" mb={2}>
+         <FontAwesomeIcon icon={faUserCircle} />
       <Text ml={2}>{assignment.data.username}</Text>
     </Flex>
+    <Text fontWeight="bold" fontSize="lg" mb={2}>{assignment.data.title}</Text>
+    <Text mb={2}>{assignment.data.description}</Text>
+    <Text mb={2}>{assignment.data.body || ''}</Text>
+   
     <Flex alignItems="center" mb={2}>
     <FontAwesomeIcon icon={faClock} />
       <Text ml={2}>Assigned: {assignment.data.assigningTime}</Text>
@@ -158,10 +163,10 @@ const SingleAssignment = () => {
       />
     </Flex>
     <FormLabel>url</FormLabel>
-    <Input  border={'1px soild blue'} onChange={(e) => url.current = e.target.value}/>
+    <Input onChange={(e) => url.current = e.target.value}/>
     {submittedUrl?
      <>
-        <Button onClick={onOpen}>Edit</Button> 
+        <Button onClick={onOpen} m={3}>Edit</Button> 
         <AlertDialog
         isOpen={isOpen}
         
@@ -189,9 +194,11 @@ const SingleAssignment = () => {
         </AlertDialogOverlay>
       </AlertDialog>
      </>:
-      <Button mt={2} onClick={handleSubmit}>submit</Button>}
+      <Button mt={2} onClick={handleSubmit} m={3}>submit</Button>}
     {submittedUrl && <Heading size={'sm'} color={'green'}>submitted url : {submittedUrl}</Heading>}
+   
   </Box>
+  </>
 );
 }
 

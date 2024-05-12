@@ -1,13 +1,18 @@
-import React from "react";
-import { useEffect } from "react";
+
+import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCourses } from "../redux/action";
-import { Box, Button, Heading, Image,Input,Select,Text } from "@chakra-ui/react";
+import { Box, Button, Heading, useDisclosure, Image,Input,Select,Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { CourseCreate } from "../components/CourseCreate";
+import { postCourse } from '../redux/action';
 import { useState } from "react";
+import { AuthContext } from "../Contexts/AuthContextProvider";
 function Courses() {
   const navigate = useNavigate();
+  const {authUser} = useContext(AuthContext)
   const dispatch = useDispatch();
+  const {isOpen,onOpen,onClose} = useDisclosure()
   const { isError, isLoading, courses } = useSelector((state) => state.Courses);
   const [page, setPage] = useState(1);
   const [search, setSearchTerm] = useState('');
@@ -38,20 +43,31 @@ function Courses() {
   const handleOrderChange = (event) => {
     setSortOrder(event.target.value);
   };
-  {
-    isError && <h1>someThing went wrong...</h1>;
-  }
-  {
-    isLoading && <h1>Loading ...</h1>;
+  const handleAddCourse = (payload) => {
+    dispatch(postCourse(payload))
   }
   const handleClick = (id) => {
 
     navigate(`/courses/${id}`);
 
   };
+
+  console.log(courses);
+  if(isLoading ) return <div>loading...</div>
+  if(isError) return <div>error</div>
   return (
     <Box textAlign={"center"} backgroundColor={"#1a202c"} color={"#fff"} >
       <Box width={"90%"} margin={"auto"}>
+    {authUser.role === 'educator' && (
+  <>
+    <Button onClick={onOpen} mt={4}>
+      Add Course
+    </Button>
+    {isOpen && (
+      <CourseCreate isOpen={isOpen} onClose={onClose} handleAddCourse={handleAddCourse} />
+    )}
+  </>
+)}
       <Box  display={'flex'} flexDirection={{
           base: 'column',
           sm: 'column',
@@ -141,7 +157,7 @@ function Courses() {
       >
         {courses?.map((course) => (
           <Box
-            key={course._id}
+            key={course?._id}
             boxShadow='xl' p='6' rounded='md' bg='white'
             padding={"5px"}
           >
@@ -163,6 +179,7 @@ function Courses() {
             <Button onClick={() => handleClick(course._id)} mt={"10px"}color={"white"} backgroundColor={"#196ae5"} >
               view all details
             </Button>
+            
           </Box>
         ))}
       </Box>
