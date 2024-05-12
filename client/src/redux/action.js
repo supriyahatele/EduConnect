@@ -1,18 +1,19 @@
-import {  FETCH_QUIZ_FAILURE, FETCH_QUIZ_REQUEST, FETCH_QUIZ_SUCCESS, FetchCourseFailure, FetchCourseLoading, FetchCourseSuccess,  PostCourseSuccess } from "./actionTypes"
+import {  FETCH_QUIZ_FAILURE, FETCH_QUIZ_REQUEST, FETCH_QUIZ_SUCCESS, FetchCourseFailure, FetchCourseLoading, FetchCourseSuccess,  AddCourseSuccess } from "./actionTypes"
 import  axios from "axios"
 
 export const postCourse= (payload)=> {
    return async (dispatch)=>{
-    dispatch({type:FetchCourseLoading})
-    try{
-         await  axios.post("http://localhost:8080/todo",payload) 
-
-        // dispatch({type:PostCourseSuccess, payload:res.data})
-        // getCourses()
-        dispatch(getCourses())
-    }catch(e){
-        dispatch({type:FetchCourseFailure})   
-    }
+        dispatch({type:FetchCourseLoading})
+        console.log('payload' ,payload);
+        axios.post("http://localhost:3000/courses/",payload)
+        .then(res => {
+            console.log('response',res.data);
+            dispatch({type:AddCourseSuccess, payload:res.data})
+        }) 
+        .catch(error => {
+            console.log(error);
+            dispatch({type:FetchCourseFailure})   
+        })
     
     }
     

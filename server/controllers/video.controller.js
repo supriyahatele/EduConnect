@@ -45,7 +45,7 @@ const singleVideo = async ( req,res) => {
 const uploadVideo = async (req,res) => {
     try{
         const videoName = `video-${Date.now()}.mp4`
-        
+        console.log(videoName);
         const filePath = req.file.path;
         const uploadParams = {
             Bucket: 'educonnect',
@@ -54,13 +54,15 @@ const uploadVideo = async (req,res) => {
             ContentType: 'video/mp4'
         };
         const {id} = req.params
+       const {title,notes} = req.body;
+      
         await s3Client.send(new PutObjectCommand(uploadParams));
         const videoUrl = `${process.env.AWS_BUCKET_URL}${videoName}`;
-       
-        const newVideo = new VideoModel({...req.body,videoUrl,course_id:id})
+       const educator = req.user
+        const newVideo = new VideoModel({educator,videoUrl,course_id:id,title,notes})
         await newVideo.save();
 
-        res.status(201).json({message : 'successfully uploaded video'})
+        res.status(201).json(newVideo)
 
         }catch(error){
         res.status(500).json({message : error.message});

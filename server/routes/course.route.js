@@ -1,21 +1,10 @@
 const express = require("express");
 const multer = require("multer");
 const courseRouter = express.Router();
-// const upload = multer({ dest: "uploads/" });
+const upload = multer({ dest: "uploads/" });
 
 
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, 'uploads/'); // Store files in 'uploads' folder
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, file.originalname);
-//   }
-// });
-// const imageUpload = multer({storage})
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
 const { auth } = require("../middlewares/auth.middleware");
 const { access } = require("../middlewares/access.middleware");
 const { isEnrolled } = require("../middlewares/isEnrolled.middleware")
@@ -38,7 +27,7 @@ const { getAssignment, addAssignment, getSingleAssignment } = require("../contro
 
 // to create course
 // auth,access('educator'),
-courseRouter.post("/Course",upload.single('file'), createCourse);
+courseRouter.post("/", createCourse);
 
 // to get all the users -- access to admin only
 courseRouter.get("/", allCourse);
@@ -57,7 +46,7 @@ courseRouter.get("/:id/videos",auth, allVideos);
 
 courseRouter.get("/:id/videos/:video_id",auth, singleVideo);
 
-courseRouter.post("/:id/videos/uploads", upload.single("video"),auth,access('educator'), uploadVideo);
+courseRouter.post("/:id/videos/uploads",auth, upload.single("video"),auth,access('educator'), uploadVideo);
 
 courseRouter.patch("/:id/videos/:video_id",auth,access("educator"),updateVideo);
 

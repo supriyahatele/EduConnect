@@ -1,25 +1,29 @@
 
-import { FETCH_QUIZ_FAILURE, FETCH_QUIZ_REQUEST, FETCH_QUIZ_SUCCESS, FetchCourseFailure, FetchCourseLoading, FetchCourseSuccess, PostCourseSuccess, getCourseFailure, getCourseLoading, getCourseSuccess } from "./actionTypes";
+import { FETCH_QUIZ_FAILURE, FETCH_QUIZ_REQUEST, FETCH_QUIZ_SUCCESS, FetchCourseFailure, FetchCourseLoading, FetchCourseSuccess, AddCourseSuccess, getCourseFailure, getCourseLoading, getCourseSuccess } from "./actionTypes";
 
 const initialValue = {
     isLoading: false,
     isError: false,
+    
     courses: []
 }
  export const courseReducer = (state = initialValue, { type, payload }) => {
     switch (type) {
         case FetchCourseLoading:
+            console.log('loading course');
             return { ...state, isLoading: true }
         case FetchCourseSuccess:
+            console.log(payload);
             return { ...state, isLoading: false, courses: payload }
         case FetchCourseFailure:
-            return { ...state, isLoading: false, isError: true, courses: [] }
-            case PostCourseSuccess:
-                return{
+            return { ...state, isLoading: false, isError: true }
+         case AddCourseSuccess:
+                console.log(state);
+                return {
                     ...state,
                     isLoading:false,
                     isError: false,
-                    courses: [...courses,payload]
+                    courses: [...state.courses,payload]
             } 
         default:
             return state;
