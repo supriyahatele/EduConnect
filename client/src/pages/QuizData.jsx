@@ -1,5 +1,7 @@
+
+
 import React, { useEffect, useState, useContext } from "react";
-import { Box, Button, Text } from "@chakra-ui/react";
+import { Box, Button, Center, List, ListItem, Text } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { getQuizData } from "../redux/action";
 import { AuthContext } from "../Contexts/AuthContextProvider";
@@ -22,7 +24,7 @@ const QuizData = () => {
 
   const handleNextQuestion = () => {
     const currentQuestion = quiz[currentQuestionIndex];
-    if (selectedOption === currentQuestion.options[currentQuestion.correctOptionIndex].text) {
+    if (selectedOption === currentQuestion.options[currentQuestion.correctOptionIndex].option) {
       setScore(score + 1);
     }
     setSelectedOption('');
@@ -39,49 +41,68 @@ const QuizData = () => {
   };
 
   return (
-    <Box width={"60%"} margin={"auto"}>
-      {!isLoading ? (
-        <div>
-          {quiz.map((question, index) => (
-            <Box key={question._id}>
-              {currentQuestionIndex === index && (
-                <>
-                  <Text>Question {index + 1}</Text>
-                  <Text>{question.question}</Text>
-                  <ul>
-                    {question.options.map((option, optionIndex) => (
-                      <li key={optionIndex}>
-                        <input
-                          type="radio"
-                          id={`option${optionIndex}`}
-                          name={`question${index}`}
-                          value={option.text}
-                          checked={selectedOption === option.text}
-                          onChange={() => handleOptionSelect(option.text)}
-                        />
-                        <label htmlFor={`option${optionIndex}`}>{option.text}</label>
-                      </li>
-                    ))}
-                  </ul>
-                  <Button onClick={handleNextQuestion}>Next</Button>
-                  <Button onClick={handleSkipQuestion}>Skip</Button>
-                </>
+    <>
+      <Box bg={"#1a202c"} color={"#fff"}>
+        <Box width={"60%"} margin={"auto"} bg={"#fff"} color={"black"} p={10} >
+          {!isLoading ? (
+            <Box>
+              {quiz.map((question, index) => (
+                <Box key={question._id} >
+                  {currentQuestionIndex === index && (
+                    <Box>
+                      <Center>
+                        <Text fontWeight={"600"} fontSize={"20px"}>Question {index + 1}</Text>
+                      </Center>
+                      <Center>
+                        <Text fontWeight={"600"} m={5}>{question.question}</Text>
+                      </Center>
+                      <Center>
+                        <List gap={5}>
+                          {question.options.map((option, optionIndex) => (
+                            <ListItem key={optionIndex}>
+                              <input
+                                type="radio"
+                                id={`option${optionIndex}`}
+                                name={`question${index}`}
+                                value={option.option}
+                                checked={selectedOption === option.option}
+                                onChange={() => handleOptionSelect(option.option)}
+                                style={{ marginRight: "10px" }}
+                              />
+                              <label htmlFor={`option${optionIndex}`} >{option.option}</label>
+                            </ListItem>
+                          ))}
+                        </List>
+                      </Center>
+                      <Center>
+                        <Button onClick={handleNextQuestion} disabled={!selectedOption} mt={5} mb={5} bg={"#196ae5"} color={"#fff"}>Next</Button>
+                        <Button onClick={handleSkipQuestion} ml={5} mt={5} mb={5} bg={"#196ae5"} color={"#fff"}>Skip</Button>
+                      </Center>
+                    </Box>
+                  )}
+                </Box>
+              ))}
+              {currentQuestionIndex === quiz.length && (
+                <Center>
+                  <Box height={"205px"}>
+                    <Center>
+                      <Text>Quiz Completed</Text>
+                    </Center>
+                    <Center>
+                      <Text fontWeight={"600"} mt={5}>Your Score: {score}</Text>
+                    </Center>
+                    <Button onClick={handleNavigate} mt={5} bg={"#196ae5"} color={"#fff"}>Go back to home page</Button>
+                  </Box>
+                </Center>
               )}
             </Box>
-          ))}
-          {currentQuestionIndex === quiz.length && (
-            <Box>
-              <Text>Quiz Completed</Text>
-              <Text>Your Score: {score}</Text>
-              <Button onClick={handleNavigate}>Go back to home page</Button>
-            </Box>
+          ) : (
+            <Text>Loading...</Text>
           )}
-        </div>
-      ) : (
-        <h1>Loading...</h1>
-      )}
-      {isError && <h1>Something went wrong...</h1>}
-    </Box>
+          {/* {isError && <Text>Something went wrong...</Text>} */}
+        </Box>
+      </Box>
+    </>
   );
 };
 
