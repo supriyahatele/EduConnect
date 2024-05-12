@@ -45,7 +45,9 @@ function Courses() {
     isLoading && <h1>Loading ...</h1>;
   }
   const handleClick = (id) => {
-    navigate(`/Course/${id}`);
+
+    navigate(`/courses/${id}`);
+
   };
   return (
     <Box width={"90%"} margin={"auto"}textAlign={"center"} >

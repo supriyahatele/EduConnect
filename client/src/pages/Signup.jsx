@@ -58,15 +58,15 @@ const navigate = useNavigate()
   };
 
   return (
-    <Box display="flex" alignItems="center" justifyContent="center" flexDirection={{base:'column-reverse',md:'row'}}  minHeight="100vh" backgroundColor="#F3F4F6">
+    <Box display="flex" alignItems="center" justifyContent="center" flexDirection={{base:'column-reverse',md:'row'}}  minHeight="100vh" bg={"#1a202c"} color={"#fff"}>
       {/* Text Area */}
       <Box className="text-area" w="50%" h={'85vh'} p={8} borderRadius={8}  >
         <Image src="/login_logo.png" alt="logo" w="200px" mb={4} />
     
-        <Heading as="h2" size="lg" mb={4} mt={'-7'} color="teal.600">
+        <Heading as="h2" size="lg" mb={4} mt={'-7'} color="white">
           Grow your skill with our best mentors
         </Heading>
-        <Text color="blue.700" fontSize="md" mb={4}>
+        <Text color="#8c7f7b" fontSize="md" mb={4}>
           The primary objective of EduConnect is to provide a centralized platform for high-quality online education, allowing users to enroll in courses and participate in collaborative learning activities.
         </Text>
       </Box>

@@ -1,26 +1,60 @@
-import { Box, Button, Select } from "@chakra-ui/react";
+
+import { Box, Center } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useState } from "react";
-import { useContext } from "react";
+import React, { useContext } from "react";
+import { useState } from "react";
 import { useEffect } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { AuthContext } from "../Contexts/AuthContextProvider";
+
+const initialState = {
+  isLoading : false,
+  data : [],
+  isError: false,
+}
+
 
 const SingleCourse = () => {
     const navigate=useNavigate()
     const {authUser} = useContext(AuthContext)
   const { id } = useParams();
+
   const [course, setCourse] = useState(null);
   const [showEnrollForm, setShowEnrollForm] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   
+  const {authUser} = useContext(AuthContext)
   useEffect(() => {
-    const getData = async () => {
-      const data = await axios.get(`http://localhost:3000/courses/${id}`);
-      setCourse(data?.data?.course);
+    const getData=async ()=>{
+        setCourse(prev => ({
+          ...prev,
+          isLoading : true
+        }))
+        const data = await axios.get(`http://localhost:3000/courses/${id}`,{
+          headers:{
+            'Authorization' : `Bearer ${authUser.token}`
+          }
+        });
+        if(data.data.message){
+          setCourse(prev => ({
+            ...prev,
+            isLoading : false,
+            isError: true
+          }))
+
+        }else{
+          setCourse(prev => ({
+            ...prev,
+            isLoading : false,
+            data : data.data.course
+
+          }))
+        }
+
     }
     getData();
   }, []);
+
 
   const handleEnroll = async () => {
     setShowEnrollForm(true);
@@ -43,18 +77,38 @@ const SingleCourse = () => {
     navigate("/courses")
   };
 
+  if(course.isLoading) return <Center>loading</Center>
+  if(course.isError) return <Center>error</Center>
+
   return (
-    <Box textAlign={'center'}>
-      <div>SingleCourse</div>
+    <Box>
+      <Box>
+        <Link to='assignments'>assignments</Link>
+        <Link to='videos'>videos</Link>
+      </Box>
       <Box textAlign={'center'}>
-        <h1>{course?.courseName}</h1>
-        <h1>{course?.educator}</h1>
-        <h1>{course?.price}</h1>
-        <h1>
-          {course?.techStack.map((tech, index) => (
-            <span key={index}>{tech} </span>
-          ))}
-        </h1>
+    
+//         <h1>{course?.courseName}</h1>
+//         <h1>{course?.educator}</h1>
+//         <h1>{course?.price}</h1>
+//         <h1>
+//           {course?.techStack.map((tech, index) => (
+//             <span key={index}>{tech} </span>
+//           ))}
+//         </h1>
+
+        <div>SingleCourse</div>
+        <Box textAlign={'center'}>
+          <h1>{course.data?.courseName}</h1>
+          <h1>{course.data?.educator}</h1>
+          <h1>{course.data?.price}</h1>
+          <h1>
+            {course.data?.techStack?.map((tech) => {
+              let newString = "";
+              return (newString += tech + " ");
+            })}
+          </h1>
+        </Box>
       </Box>
       {!showEnrollForm ? (
         <Button onClick={handleEnroll}>Enroll now</Button>
