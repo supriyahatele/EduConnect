@@ -34,7 +34,7 @@ const {
   deleteVideo,
   singleVideo,
 } = require("../controllers/video.controller");
-const { getAssignment, addAssignment } = require("../controllers/assignment.controller");
+const { getAssignment, addAssignment, getSingleAssignment } = require("../controllers/assignment.controller");
 
 // to create course
 // auth,access('educator'),
@@ -53,9 +53,9 @@ courseRouter.patch("/:id",auth,access('educator'), updateCourse);
 // to delete the user
 courseRouter.delete("/:id",auth,access('educator'), deleteCourse);
 
-courseRouter.get("/:id/videos",auth,isEnrolled, allVideos);
+courseRouter.get("/:id/videos",auth, allVideos);
 
-courseRouter.get("/:id/videos/:video_id",auth,isEnrolled, singleVideo);
+courseRouter.get("/:id/videos/:video_id",auth, singleVideo);
 
 courseRouter.post("/:id/videos/uploads", upload.single("video"),auth,access('educator'), uploadVideo);
 
@@ -63,7 +63,9 @@ courseRouter.patch("/:id/videos/:video_id",auth,access("educator"),updateVideo);
 
 courseRouter.delete("/:id/videos/:video_id",auth,access("educator"),deleteVideo);
 
-courseRouter.get("/:id/getAssignment", auth,isEnrolled, getAssignment);
+courseRouter.get("/:id/getAssignment", auth, getAssignment);
+
+courseRouter.get("/:id/getAssignment/:assignment_id", auth, getSingleAssignment);
 
 courseRouter.post("/:id/createAssignment",auth,access("educator"),addAssignment);
 
