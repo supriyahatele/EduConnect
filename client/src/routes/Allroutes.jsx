@@ -13,7 +13,11 @@ import { Videos } from '../pages/Videos'
 import SingleVideo from '../components/Videos/SingleVideo'
 import { Assignments } from '../pages/Assignments'
 import { PrivateRoute } from './PrivateRoute'
+
+
+
 import MyCourses from '../components/MyCourses'
+
 
 function Allroutes() {
     return (
@@ -52,6 +56,7 @@ function Allroutes() {
                 <Profile />
                 </PrivateRoute>
                 } />
+                <Route path="/quiz" element={<QuizData />} />
             </Routes>
         </>
     )
