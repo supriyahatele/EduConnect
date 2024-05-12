@@ -13,7 +13,11 @@ import { Videos } from '../pages/Videos'
 import SingleVideo from '../components/Videos/SingleVideo'
 import { Assignments } from '../pages/Assignments'
 import { PrivateRoute } from './PrivateRoute'
-import { QuizData } from '../pages/QuizData'
+
+
+
+import MyCourses from '../components/MyCourses'
+
 
 function Allroutes() {
     return (
@@ -22,13 +26,26 @@ function Allroutes() {
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/courses" element={<Courses />} />
+                <Route path="/mycourses" element={
+                    <PrivateRoute>
+                       <MyCourses />
+                    </PrivateRoute>
+                } />
                 <Route path="/courses/:id" element={<SingleCourse />} />
 
                 <Route path='/courses/:id/assignments' element={<PrivateRoute>
                     <Assignments />
                 </PrivateRoute>} />
-                <Route path='/courses/:id/assignments/:assignment_id' element={<SingleAssignment />} />
-                <Route path='/courses/:id/videos/:video_id' element={<SingleVideo />} />
+                <Route path='/courses/:id/assignments/:assignment_id' element={
+                    <PrivateRoute>
+                <SingleAssignment />
+                </PrivateRoute>
+                } />
+                <Route path='/courses/:id/videos/:video_id' element={
+                    <PrivateRoute>
+                      <SingleVideo />
+                     </PrivateRoute>
+                } />
                 <Route path='/courses/:id/videos' element={<PrivateRoute>
                     <Videos />
                 </PrivateRoute>} />

@@ -36,6 +36,17 @@ const allCourse = async (req, res) => {
     }
 }
 
+const getMyCourses = async (req,res) => {
+    try{
+        const user_id = req.id
+        console.log(user_id);
+        const courses = await CourseModel.find({ students: { $in: [user_id] } })
+        res.status(200).json(courses);
+    }catch(error){
+        res.status(505).json({message : error.message})
+    }
+}
+
 
 // get the  course info
 const courseById =  async (req, res) => {
@@ -158,6 +169,7 @@ async function uploadFile(file) {
 module.exports = {
     allCourse,
     createCourse,
+    getMyCourses,
     courseById,
     deleteCourse,
     updateCourse,

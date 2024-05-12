@@ -15,6 +15,7 @@ const {
   courseById,
   updateCourse,
   deleteCourse,
+  getMyCourses,
 } = require("../controllers/course.controller");
 const {
   allVideos,
@@ -31,6 +32,8 @@ courseRouter.post("/", createCourse);
 
 // to get all the users -- access to admin only
 courseRouter.get("/", allCourse);
+
+courseRouter.get('/mycourses',auth,getMyCourses)
 
 // to get profile of the user -- user details
 courseRouter.get("/:id",courseById);
