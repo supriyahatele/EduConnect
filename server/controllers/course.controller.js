@@ -38,16 +38,19 @@ const courseById =  async (req, res) => {
 // createCourse
 const createCourse = async (req, res) => {
     try{
-        const {courseName,educator,price,techStack,rating,reviews} = req.body;
-        const file=req.file
+        const {courseName,educator,price,techStack,rating,reviews,imageUrl} = req.body;
+        // const file=req.file
 
-        if(courseName && educator && techStack.length > 0 && price&& file &&rating && reviews ){
-            let uploadedFileURL= await uploadFile(file)
-            console.log(uploadedFileURL)
-            const newUser = new CourseModel({...req.body, imageUrl:uploadedFileURL})
+        console.log(req.body);
+        if(courseName && educator && techStack.length > 0 && price && imageUrl && rating && reviews ){
+            // let uploadedFileURL= await uploadFile(file)
+            // console.log(uploadedFileURL)
+            const newUser = new CourseModel({...req.body,students:[]})
             // console.log(newUser)
             await newUser.save(); 
-        res.status(201).json({message : 'course added  successfully '})
+            
+
+        res.status(201).json(newUser)
             
         }else{
             res.status(400).json({message : 'all fields are required'})

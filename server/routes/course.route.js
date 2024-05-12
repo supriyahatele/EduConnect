@@ -38,7 +38,7 @@ const { getAssignment, addAssignment, getSingleAssignment } = require("../contro
 
 // to create course
 // auth,access('educator'),
-courseRouter.post("/Course",upload.single('file'), createCourse);
+courseRouter.post("/", createCourse);
 
 // to get all the users -- access to admin only
 courseRouter.get("/", allCourse);
