@@ -1,5 +1,5 @@
 
-import { FetchCourseFailure, FetchCourseLoading, FetchCourseSuccess, PostCourseSuccess, getCourseFailure, getCourseLoading, getCourseSuccess } from "./actionTypes";
+import { FETCH_QUIZ_FAILURE, FETCH_QUIZ_REQUEST, FETCH_QUIZ_SUCCESS, FetchCourseFailure, FetchCourseLoading, FetchCourseSuccess, PostCourseSuccess, getCourseFailure, getCourseLoading, getCourseSuccess } from "./actionTypes";
 
 const initialValue = {
     isLoading: false,

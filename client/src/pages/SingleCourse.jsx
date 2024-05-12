@@ -11,6 +11,7 @@ import {
   getCourseLoading,
   getCourseSuccess,
 } from "../redux/actionTypes";
+import { QuizData } from "./QuizData";
 
 const SingleCourse = () => {
   const navigate = useNavigate();
@@ -80,11 +81,11 @@ const SingleCourse = () => {
             <Box width={"100%"} textAlign={"left"} >
             <Text fontSize={"18px"} fontWeight={"normal"}>Build fully functional web apps using MEAN stack. Acquire comprehensive skills in MongoDB, Express.js, Angular, and Node.js to design, develop, and deploy real-world high-performance web applications.</Text>
             </Box>
-            <Text  fontSize={"18px"} mt={"10px"} fontWeight={"medium"} >{` Instructor ${course.educator}`}</Text>
-            <Text fontSize={"18px"} mt={"10px"} fontWeight={"normal"}>{`course fees:${course.price} ₹`}</Text>
+            <Text  fontSize={"18px"} mt={"10px"} fontWeight={"medium"} >{` Instructor ${course?.educator}`}</Text>
+            <Text fontSize={"18px"} mt={"10px"} fontWeight={"normal"}>{`course fees:${course?.price} ₹`}</Text>
             <Text fontSize={"18px"} mt={"10px"} fontWeight={"normal"}>
                What You will learn :
-              {course.techStack.map((tech) => {
+              {course?.techStack.map((tech) => {
                 let newString = "";
                 return (newString += tech + " ");
               })}
@@ -112,6 +113,7 @@ const SingleCourse = () => {
         <Box>
         <Link to="assignments">assignments</Link>
         <Link to="videos">videos</Link>
+        <QuizData/>
       </Box>
       </Box>
       
