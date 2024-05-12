@@ -17,6 +17,7 @@ import { PrivateRoute } from './PrivateRoute'
 
 
 import MyCourses from '../components/MyCourses'
+import { QuizData } from '../pages/QuizData'
 
 
 function Allroutes() {
@@ -56,7 +57,11 @@ function Allroutes() {
                 <Profile />
                 </PrivateRoute>
                 } />
-                <Route path="/quiz" element={<QuizData />} />
+                <Route path="/quiz" element={
+                    <PrivateRoute>
+                <QuizData />
+                </PrivateRoute>
+                } />
             </Routes>
         </>
     )

@@ -42,7 +42,7 @@ const QuizData = () => {
 
   return (
     <>
-      <Box bg={"#1a202c"} color={"#fff"}>
+      <Box bg={"#1a202c"} color={"#fff"} pt={3}>
         <Box width={"60%"} margin={"auto"} bg={"#fff"} color={"black"} p={10} >
           {!isLoading ? (
             <Box>
@@ -75,8 +75,8 @@ const QuizData = () => {
                         </List>
                       </Center>
                       <Center>
-                        <Button onClick={handleNextQuestion} disabled={!selectedOption} mt={5} mb={5} bg={"#196ae5"} color={"#fff"}>Next</Button>
-                        <Button onClick={handleSkipQuestion} ml={5} mt={5} mb={5} bg={"#196ae5"} color={"#fff"}>Skip</Button>
+                        <Button onClick={handleNextQuestion} disabled={!selectedOption} mt={5} mb={5} bg={"#196ae5"} color={"#fff"}>Skip</Button>
+                        <Button onClick={handleSkipQuestion} ml={5} mt={5} mb={5} bg={"#196ae5"} color={"#fff"}>Next</Button>
                       </Center>
                     </Box>
                   )}
