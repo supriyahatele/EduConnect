@@ -1,5 +1,5 @@
 
-import { FetchCourseFailure, FetchCourseLoading, FetchCourseSuccess, PostCourseSuccess } from "./actionTypes";
+import { FetchCourseFailure, FetchCourseLoading, FetchCourseSuccess, PostCourseSuccess, getCourseFailure, getCourseLoading, getCourseSuccess } from "./actionTypes";
 
 const initialValue = {
     isLoading: false,
@@ -25,3 +25,22 @@ const initialValue = {
             return state;
     }
 } 
+
+const initValue = {
+    isLoading: false,
+    isError: false,
+    course: null
+}
+export const OneCourseReducer = (state = initValue, { type, payload }) => {
+    switch (type) {
+        case getCourseLoading:
+            return { ...state, isLoading: true }
+        case getCourseSuccess:
+            return { ...state, isLoading: false, course: payload }
+        case getCourseFailure:
+            return { ...state, isLoading: false, isError: true, course: null }
+            
+        default:
+            return state;
+    }
+}

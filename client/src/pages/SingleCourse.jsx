@@ -1,56 +1,40 @@
 
-import { Box, Center } from "@chakra-ui/react";
+import { Box, Button, Center, Image, Select } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../Contexts/AuthContextProvider";
-
-const initialState = {
-  isLoading : false,
-  data : [],
-  isError: false,
-}
-
+import { useDispatch, useSelector } from "react-redux";
+import { getCourseFailure, getCourseLoading, getCourseSuccess } from "../redux/actionTypes";
 
 const SingleCourse = () => {
     const navigate=useNavigate()
     const {authUser} = useContext(AuthContext)
   const { id } = useParams();
-
-  const [course, setCourse] = useState(null);
+const dispatch=useDispatch()
+const { isLoading,isError,course } = useSelector((state) => state.singleCourse);
   const [showEnrollForm, setShowEnrollForm] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   
-  const {authUser} = useContext(AuthContext)
+  // const {authUser} = useContext(AuthContext)
   useEffect(() => {
     const getData=async ()=>{
-        setCourse(prev => ({
-          ...prev,
-          isLoading : true
-        }))
-        const data = await axios.get(`http://localhost:3000/courses/${id}`,{
-          headers:{
-            'Authorization' : `Bearer ${authUser.token}`
-          }
-        });
-        if(data.data.message){
-          setCourse(prev => ({
-            ...prev,
-            isLoading : false,
-            isError: true
-          }))
-
-        }else{
-          setCourse(prev => ({
-            ...prev,
-            isLoading : false,
-            data : data.data.course
-
-          }))
+        dispatch({type:getCourseLoading})
+        try {
+          const data = await axios.get(`http://localhost:3000/courses/${id}`,{
+            // headers:{
+            //   'Authorization' : `Bearer ${authUser.token}`
+            // }
+          });
+          // setCourse(data) 
+          console.log(data.data.course)
+          dispatch({type:getCourseSuccess, payload:data.data.course});
+        } catch (error) {
+          dispatch({type:getCourseFailure})
         }
-
+       
     }
     getData();
   }, []);
@@ -77,8 +61,8 @@ const SingleCourse = () => {
     navigate("/courses")
   };
 
-  if(course.isLoading) return <Center>loading</Center>
-  if(course.isError) return <Center>error</Center>
+  if(isLoading) return <Center>loading</Center>
+  if(isError) return <Center>error</Center>
 
   return (
     <Box>
@@ -88,22 +72,23 @@ const SingleCourse = () => {
       </Box>
       <Box textAlign={'center'}>
     
-//         <h1>{course?.courseName}</h1>
+{/* //         <h1>{course?.courseName}</h1>
 //         <h1>{course?.educator}</h1>
 //         <h1>{course?.price}</h1>
 //         <h1>
 //           {course?.techStack.map((tech, index) => (
 //             <span key={index}>{tech} </span>
 //           ))}
-//         </h1>
+//         </h1> */}
 
         <div>SingleCourse</div>
-        <Box textAlign={'center'}>
-          <h1>{course.data?.courseName}</h1>
-          <h1>{course.data?.educator}</h1>
-          <h1>{course.data?.price}</h1>
+        <Box textAlign={'center'} width={"30%"} margin={"auto"}>
+        <Image src={course?.imageUrl} width={"100%"}/>
+          <h1>{course?.courseName}</h1>
+          <h1>{course?.educator}</h1>
+          <h1>{course?.price}</h1>
           <h1>
-            {course.data?.techStack?.map((tech) => {
+            {course?.techStack?.map((tech) => {
               let newString = "";
               return (newString += tech + " ");
             })}
@@ -111,7 +96,7 @@ const SingleCourse = () => {
         </Box>
       </Box>
       {!showEnrollForm ? (
-        <Button onClick={handleEnroll}>Enroll now</Button>
+        <Button ml={"700px"} onClick={handleEnroll}>Enroll now</Button>
       ) : (
         <Box>
           <Select
