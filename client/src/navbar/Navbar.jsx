@@ -25,7 +25,7 @@ function Navbar() {
     //   boxShadow="base"
     //   p={5}
       >
-                <Image width={"150px"} height={"30px"} src='/logo.png' alt='logo' />
+                <Image width={{base : "100px",md : "150px" }} display={{base:'none', md : 'inline-block'}} height={{base : "10px",md : "30px"}} src='/logo.png' alt='logo' />
                 {/* <Text fontWeight={800} color={"#196ae5"}>EDU CONNECT...</Text> */}
                 {pages.map((el) => (
                     <NavLink

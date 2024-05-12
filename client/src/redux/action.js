@@ -9,6 +9,7 @@ export const postCourse= (payload)=> {
         .then(res => {
             console.log('response',res.data);
             dispatch({type:AddCourseSuccess, payload:res.data})
+           
         }) 
         .catch(error => {
             console.log(error);

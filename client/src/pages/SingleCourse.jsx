@@ -24,10 +24,10 @@ const SingleCourse = () => {
   const { isLoading, isError, course } = useSelector(
     (state) => state.singleCourse
   );
+  console.log(course,authUser);
   const [showEnrollForm, setShowEnrollForm] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
 
-  // const {authUser} = useContext(AuthContext)
   useEffect(() => {
     const getData = async () => {
       dispatch({ type: getCourseLoading });
@@ -66,7 +66,7 @@ const SingleCourse = () => {
         },
       }
     );
-    navigate("/courses");
+    navigate("/mycourses");
   };
 
 
@@ -76,6 +76,12 @@ const SingleCourse = () => {
 
   return (
     <Box  backgroundColor={"#1a202c"} color={"#fff"} >
+       {course?.students.length > 0 && course.students?.includes(authUser.id) && 
+        <Box pb={4} display={'flex'} justifyContent={'space-between'} >
+          <Button w={'49%'} bgColor={'blue.600'} color={'white'} onClick={()=>navigate('assignments')}>assignments</Button>
+          <Button w={'50%'} bgColor={'blue.600'} color={'white'} onClick={() => navigate('videos')}>videos</Button>
+        </Box>
+          }
       <Box textAlign={"center"} height={"550px"} width={"90%"} margin={"auto"}>
         <Box textAlign={"center"}  display={"flex"}gap={"20px"}   >
           <Box width={"30%"}>
@@ -86,15 +92,13 @@ const SingleCourse = () => {
             <Box width={"100%"} textAlign={"left"} >
             <Text fontSize={"18px"} fontWeight={"normal"}>Build fully functional web apps using MEAN stack. Acquire comprehensive skills in MongoDB, Express.js, Angular, and Node.js to design, develop, and deploy real-world high-performance web applications.</Text>
             </Box>
-      {authUser.role === 'educator' && <Box textAlign={'right'} mr={'30px'} > <Button mr={'40px'} color={'white'} m={'auto'} p={3} bgColor={'blue.600'} onClick={onOpen}>students</Button></Box>}
+    
       <>
        
         {isOpen && (
           <UpdateCourse isOpen={isOpen} onClose={onClose} course={course} />
         )}
       </>
-
-
             <Text  fontSize={"18px"} mt={"10px"} fontWeight={"medium"} >{` Instructor ${course?.educator}`}</Text>
             <Text fontSize={"18px"} mt={"10px"} fontWeight={"normal"}>{`course fees:${course?.price} ₹`}</Text>
             <Text fontSize={"18px"} mt={"10px"} fontWeight={"normal"}>
@@ -104,6 +108,8 @@ const SingleCourse = () => {
                 return (newString += tech + " ");
               })}
               </Text>
+              {course?.students.length > 0 && course.students?.includes(authUser.id) ? <> </> :
+              <>
             {!showEnrollForm ? (
         <Button  onClick={handleEnroll} mt={"5px"}>
           Enroll now
@@ -122,15 +128,15 @@ const SingleCourse = () => {
           <Button mt={"10px"} onClick={handleSubmitEnrollment}>Enroll</Button>
         </Box>
       )}
+      </>}
           </Box>
         </Box>
         <Box>
-        <Link to="assignments">assignments</Link>
-        <Link to="videos">videos</Link>
-        <QuizData/>
+         
+        {/* <QuizData/> */}
       </Box>
       </Box>
-      
+     
       
     </Box>
   );

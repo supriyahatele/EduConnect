@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'
 import { VideoList } from '../components/Videos/VideoList';
 import { AuthContext } from '../Contexts/AuthContextProvider';
+import { useToast } from '@chakra-ui/react';
 const initialState = {
   isLoading: false,
   data : [],
@@ -11,6 +12,7 @@ const initialState = {
 }
 const Videos = () => {
     const {id} = useParams();
+    const toast = useToast()
     const [videos,setVideos] = useState(initialState)
     const {authUser} = useContext(AuthContext)
     useEffect(()=>{
@@ -49,6 +51,13 @@ const Videos = () => {
         isError:false,
         data : [...prev.data,payload]
       }))
+      toast({
+        title: 'Video added.',
+        description: "You've added a video.",
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      })
 
     }
     if(videos.isLoading) return <h1>loading</h1>

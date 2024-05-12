@@ -33,7 +33,7 @@ const MyCourses = () => {
     if(loading) return <Box>loading</Box>
     if(error) return <Box>error</Box>
   return (
-    <Box display={'flex'} flexWrap={'wrap'}  p={4} gap={4} justifyContent={'center'}>
+    <Box display={'flex'} flexWrap={'wrap'} alignItems={'center'}  p={4} gap={4} justifyContent={'center'}>
       {myCourses.map(course => {
         return <MyCourseCard key={course._id} course={course}/>
       })}

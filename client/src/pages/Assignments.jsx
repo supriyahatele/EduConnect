@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'
 import { AuthContext } from '../Contexts/AuthContextProvider';
 
-import { Box, Button, Center, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Center, useDisclosure, useToast } from '@chakra-ui/react';
 import { AssignmentList } from '../components/Assignments/AssignmentList';
 import { AssignmentCreate } from '../components/Assignments/AssignmentCreate';
 
@@ -15,6 +15,7 @@ const initialState = {
 }
 const Assignments = () => {
     const {id} = useParams();
+    const toast = useToast()
     const {authUser} = useContext(AuthContext)
     const {isOpen,onOpen,onClose} = useDisclosure()
    console.log(authUser);
@@ -75,7 +76,13 @@ const Assignments = () => {
                     isError:false,
                     data : [...prev.data,res.data]
                 }))
-                console.log(res.data.assignment);
+                toast({
+                    title: 'Assignment created.',
+                    description: "You've created a assignment for the course.",
+                    status: 'success',
+                    duration: 3000,
+                    isClosable: true,
+                  })
             }
         })
         .catch(err => {
@@ -104,7 +111,14 @@ const Assignments = () => {
                     isError:false,
                     data : prev.data.filter(assignment => assignment._id === id ? false : true)
                 }))
-                console.log(res.data.assignment);
+                toast({
+                    title: 'Assignment deleted.',
+                    description: "You've deleted a assignment for the course.",
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                  })
+                
             }
         })
         .catch(err => {

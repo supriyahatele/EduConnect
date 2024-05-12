@@ -2,7 +2,7 @@
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCourses } from "../redux/action";
-import { Box, Button, Heading, useDisclosure, Image, Input, Select, Text } from "@chakra-ui/react";
+import { Box, Button, Heading, useDisclosure, Image,Input,Select,Text, useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { CourseCreate } from "../components/CourseCreate";
 import { postCourse } from '../redux/action';
@@ -18,7 +18,7 @@ function Courses() {
   const [search, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [sortOrder, setSortOrder] = useState('asc');
-
+  const toast = useToast()
   useEffect(() => {
     dispatch(getCourses(page, search, sortBy, sortOrder));
     console.log("useEffect called");
@@ -45,6 +45,13 @@ function Courses() {
   };
   const handleAddCourse = (payload) => {
     dispatch(postCourse(payload))
+    toast({
+      title: 'Course created.',
+      description: "You have successfully added a course",
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+    })
   }
   const handleClick = (id) => {
 

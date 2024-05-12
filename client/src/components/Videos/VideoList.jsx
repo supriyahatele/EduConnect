@@ -27,11 +27,12 @@ const VideoList = ({videos,addVideo}) => {
     )}
   </>
 )}
+      <Box display={'flex'} justifyContent={'center'} m={3}>
         {videos.map(video => {
             return (
                 <Box
                 key={video._id}
-            
+                
                 bg="#1a202c"
                 color="#fff"
                 display="flex"
@@ -40,7 +41,7 @@ const VideoList = ({videos,addVideo}) => {
                 justifyContent="center"
                 p={4}
                 borderRadius="md"
-             
+               w={'95%'}
                
               >
                 <Heading size="md" mb={2}>
@@ -62,7 +63,7 @@ const VideoList = ({videos,addVideo}) => {
               </Box>
             )
         })}
-      
+      </Box>
     </div>
   )
 }

@@ -17,6 +17,7 @@ import { PrivateRoute } from './PrivateRoute'
 
 
 import MyCourses from '../components/MyCourses'
+import { QuizData } from '../pages/QuizData'
 
 
 function Allroutes() {
@@ -51,8 +52,16 @@ function Allroutes() {
                 </PrivateRoute>} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/quiz" element={<QuizData />} />
+                <Route path="/profile" element={
+                    <PrivateRoute>
+                <Profile />
+                </PrivateRoute>
+                } />
+                <Route path="/quiz" element={
+                    <PrivateRoute>
+                <QuizData />
+                </PrivateRoute>
+                } />
             </Routes>
         </>
     )
