@@ -86,7 +86,7 @@ const SingleCourse = () => {
             <Box width={"100%"} textAlign={"left"} >
             <Text fontSize={"18px"} fontWeight={"normal"}>Build fully functional web apps using MEAN stack. Acquire comprehensive skills in MongoDB, Express.js, Angular, and Node.js to design, develop, and deploy real-world high-performance web applications.</Text>
             </Box>
-      {authUser.role === 'educator' && <Box textAlign={'right'} mr={'30px'} > <Button mr={'40px'} color={'white'} m={'auto'} p={3} bgColor={'blue.600'} onClick={onOpen}>Edit</Button></Box>}
+      {authUser.role === 'educator' && <Box textAlign={'right'} mr={'30px'} > <Button mr={'40px'} color={'white'} m={'auto'} p={3} bgColor={'blue.600'} onClick={onOpen}>students</Button></Box>}
       <>
        
         {isOpen && (
