@@ -1,9 +1,10 @@
 import {applyMiddleware, combineReducers, legacy_createStore } from 'redux'
-import { courseReducer } from './reducers'
+import { OneCourseReducer, courseReducer } from './reducers'
 import {thunk} from "redux-thunk";
 
 const rootReducer=combineReducers({
-    Courses:courseReducer
+    Courses:courseReducer,
+    singleCourse:OneCourseReducer
 })
 export const store= legacy_createStore(rootReducer,applyMiddleware(thunk))
  
