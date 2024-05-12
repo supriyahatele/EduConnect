@@ -9,8 +9,7 @@ const { access } = require('../middlewares/access.middleware');
 userRouter.get('/', auth, access('admin'),  allUsers)
 
 // to get profile of the user -- user details
-userRouter.get('/:id', userProfile)
-
+userRouter.get('/:id',auth, userProfile)
 
 // to login the user
 userRouter.post('/login', loginUser)

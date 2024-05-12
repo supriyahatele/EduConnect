@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const { BlackListModel } = require('../models/blackList.model.js');
+const { CourseModel } = require('../models/course.model.js');
+const { SubmissionModel } = require('../models/submission.model.js');
 const saltRounds = 7;
 
 // get all users list only acces for admin
@@ -20,11 +22,12 @@ const allUsers = async (req, res) => {
 // get the user profile info
 const userProfile =  async (req, res) => {
     try{
-        const { id } = req.params;
+        const { id } = req;
+        const courses = await CourseModel.find({ students: { $in: [id] } })
         const isUser = await UserModel.findById(id);
-    
+      
         if(isUser){
-            res.status(200).json({user : isUser});
+            res.status(200).json({user : isUser,courses});
         }else{
             res.status(404).json({error : 'User not found'})
         }
