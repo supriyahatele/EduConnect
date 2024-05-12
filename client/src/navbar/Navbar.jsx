@@ -9,7 +9,7 @@ const pages = [
     { id: 1, to: "/", name: "Home" },
     { id: 2, to: "/mycourses", name: "MyCourses" },
     { id: 2, to: "/courses", name: "Courses" },
-    // { id: 4, to: "/login", name: "Login" },
+    { id: 4, to: "/quiz", name: "Quiz" },
     { id: 3, to: "/profile", name: "Profile" },
 ];
 

@@ -4,7 +4,7 @@ import { Box, Button, Center, Container, Flex, Grid, HStack, Heading, Image, Sim
 function Footer() {
   return (
     <>
-      <Box color={"#b3b3b3"} bg={"black"}>
+      <Box color={"#b3b3b3"} bg={"black"} >
           <Center>
           
           <Image width={"150px"} height={"30px"} src='/logo.png' alt='logo' bg={"#FFF"} mt={4} p={1}/>
