@@ -21,6 +21,8 @@ function Allroutes() {
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/courses" element={<Courses />} />
+
+
                 <Route path="/courses/:id" element={<SingleCourse />} />
 
                 <Route path='/courses/:id/assignments' element={<PrivateRoute>
@@ -31,6 +33,7 @@ function Allroutes() {
                 <Route path='/courses/:id/videos' element={<PrivateRoute>
                     <Videos />
                 </PrivateRoute>} />
+
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/profile" element={<Profile />} />

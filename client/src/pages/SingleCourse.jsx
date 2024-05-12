@@ -1,3 +1,4 @@
+
 import { Box, Center } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useContext } from "react";
@@ -12,9 +13,16 @@ const initialState = {
   isError: false,
 }
 
+
 const SingleCourse = () => {
+    const navigate=useNavigate()
+    const {authUser} = useContext(AuthContext)
   const { id } = useParams();
-  const [course, setCourse] = useState(initialState);
+
+  const [course, setCourse] = useState(null);
+  const [showEnrollForm, setShowEnrollForm] = useState(false);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+  
   const {authUser} = useContext(AuthContext)
   useEffect(() => {
     const getData=async ()=>{
@@ -42,11 +50,36 @@ const SingleCourse = () => {
 
           }))
         }
+
     }
-    getData()
+    getData();
   }, []);
+
+
+  const handleEnroll = async () => {
+    setShowEnrollForm(true);
+  };
+
+  const handlePaymentMethodChange = (event) => {
+    setSelectedPaymentMethod(event.target.value);
+  };
+
+  const handleSubmitEnrollment = async () => {
+    // Perform enrollment with selected payment method
+    await axios.post(`http://localhost:3000/enrollments/enroll`, 
+      {courseID: id,
+      paymentMethod: selectedPaymentMethod,
+      status: true}, // Set status to true for enrollment,
+      {headers:{
+        'Authorization' : `Bearer ${authUser.token}`
+      }
+    });
+    navigate("/courses")
+  };
+
   if(course.isLoading) return <Center>loading</Center>
   if(course.isError) return <Center>error</Center>
+
   return (
     <Box>
       <Box>
@@ -54,6 +87,16 @@ const SingleCourse = () => {
         <Link to='videos'>videos</Link>
       </Box>
       <Box textAlign={'center'}>
+    
+//         <h1>{course?.courseName}</h1>
+//         <h1>{course?.educator}</h1>
+//         <h1>{course?.price}</h1>
+//         <h1>
+//           {course?.techStack.map((tech, index) => (
+//             <span key={index}>{tech} </span>
+//           ))}
+//         </h1>
+
         <div>SingleCourse</div>
         <Box textAlign={'center'}>
           <h1>{course.data?.courseName}</h1>
@@ -67,6 +110,22 @@ const SingleCourse = () => {
           </h1>
         </Box>
       </Box>
+      {!showEnrollForm ? (
+        <Button onClick={handleEnroll}>Enroll now</Button>
+      ) : (
+        <Box>
+          <Select
+            placeholder="Select payment method"
+            value={selectedPaymentMethod}
+            onChange={handlePaymentMethodChange}
+          >
+            <option value="debitCard">Debit Card</option>
+            <option value="creditCard">Credit Card</option>
+            <option value="upiID">UPI ID</option>
+          </Select>
+          <Button onClick={handleSubmitEnrollment}>Enroll</Button>
+        </Box>
+      )}
     </Box>
   );
 };
