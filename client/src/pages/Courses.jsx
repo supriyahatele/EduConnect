@@ -78,7 +78,7 @@ function Courses() {
         }}>
         <Input mt={"20px"}
           type="text"
-          placeholder="Search products..."
+          placeholder="Search course..."
           value={search}
           onChange={handleSearchChange}
         />
@@ -149,7 +149,7 @@ function Courses() {
             <Box width={"80%"} margin={"auto"} textAlign={"center"}>  
             <Text color={'black'}fontSize={"20"} fontWeight={"medium"}>{course.courseName}</Text>
             </Box>
-            <Text  color={'black'} >{course.educator}</Text>
+            <Text  color={'black'} fontWeight={"medium"} >{` Instructor ${course.educator}`}</Text>
             <Text color={'black'}>{`course fees:${course.price} ₹`}</Text>
             <Box color={'black'} height={'60px'} width={"80%"} margin={"auto"} textAlign={"center"}>
               <Text>
