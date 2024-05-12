@@ -71,16 +71,6 @@ const { isLoading,isError,course } = useSelector((state) => state.singleCourse);
         <Link to='videos'>videos</Link>
       </Box>
       <Box textAlign={'center'}>
-    
-{/* //         <h1>{course?.courseName}</h1>
-//         <h1>{course?.educator}</h1>
-//         <h1>{course?.price}</h1>
-//         <h1>
-//           {course?.techStack.map((tech, index) => (
-//             <span key={index}>{tech} </span>
-//           ))}
-//         </h1> */}
-
         <div>SingleCourse</div>
         <Box textAlign={'center'} width={"30%"} margin={"auto"}>
         <Image src={course?.imageUrl} width={"100%"}/>
