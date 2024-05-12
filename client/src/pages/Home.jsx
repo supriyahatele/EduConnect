@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, Button, Center, Container, Flex, Grid, HStack, Heading, Image, SimpleGrid, Stack, Tag, Text, VStack } from '@chakra-ui/react';
 import { extendTheme } from '@chakra-ui/react'
 import Footer from './Footer';
-import Quiz from './Quiz';
+
 
 function Home() {
 

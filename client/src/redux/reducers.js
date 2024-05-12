@@ -1,5 +1,5 @@
 
-import { FetchCourseFailure, FetchCourseLoading, FetchCourseSuccess, PostCourseSuccess, getCourseFailure, getCourseLoading, getCourseSuccess } from "./actionTypes";
+import { FETCH_QUIZ_FAILURE, FETCH_QUIZ_REQUEST, FETCH_QUIZ_SUCCESS, FetchCourseFailure, FetchCourseLoading, FetchCourseSuccess, PostCourseSuccess, getCourseFailure, getCourseLoading, getCourseSuccess } from "./actionTypes";
 
 const initialValue = {
     isLoading: false,
@@ -40,6 +40,38 @@ export const OneCourseReducer = (state = initValue, { type, payload }) => {
         case getCourseFailure:
             return { ...state, isLoading: false, isError: true, course: null }
             
+        default:
+            return state;
+    }
+}
+
+
+const initialQiz = {
+    isLoading: false,
+    isError: false,
+    quiz:[],
+
+}
+ export const quizReducer = (state = initialQiz, { type, payload }) => {
+    switch (type) {
+        case FETCH_QUIZ_REQUEST:
+            return {
+                ...state,
+                isLoading: true,              
+            }
+        case FETCH_QUIZ_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                quiz:payload
+            }
+        case FETCH_QUIZ_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+                quiz:[] 
+            }
         default:
             return state;
     }
