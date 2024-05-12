@@ -1,6 +1,8 @@
 import React from 'react'
 import { Box, Button, Center, Container, Flex, Grid, HStack, Heading, Image, SimpleGrid, Stack, Tag, Text, VStack } from '@chakra-ui/react';
 import { extendTheme } from '@chakra-ui/react'
+import Footer from './Footer';
+
 
 function Home() {
 
@@ -16,8 +18,23 @@ function Home() {
   return (
     <>
       <Box bg={"#1a202c"} color={"#fff"}>
+        <Flex>
+          <Box mt={10} width={"50%"} marginLeft={10}>
+          <Center><Text mt={5} fontSize={"18px"} fontWeight={"500"} color={"orangered"}>LEARN WITH</Text></Center>
+          <Center><Text mt={1} fontWeight={"800"} fontSize={"60px"}>India's trusted education platform</Text></Center>
+            <Center>
+              <Text color={"#8c7f7b"} mt={5} textAlign={"start"} >Unlock your career's potential with certified courses from top-tier educators worldwide. Broaden your horizons, gain cutting-edge skills, and propel your career to new heights. With our extensive offerings, you'll find the perfect path to success. Power ahead confidently with us by your side.</Text>
+            </Center>
+            <center>
+                  <Button mt={10} p={"30px 160px"} bg={"#196ae5"} color={"#fff"}>Explore More</Button>
+                </center>
+          </Box>
+          <Center>
+          <Image src='/heroimage.webp' alt='HeroImage' border={"5px solid redOrange"} mt={"100px"} marginLeft={10}/>
+          </Center>
+        </Flex>
         <Box>
-          <Center><Text mt={5} fontSize={"18px"} fontWeight={"500"} color={"orangered"}>In Partnership with</Text></Center>
+          <Center><Text mt={"100px"} fontSize={"18px"} fontWeight={"500"} color={"orangered"}>In Partnership with</Text></Center>
           <Center><Text mt={1} fontWeight={"800"} fontSize={"60px"}> World's Top University</Text></Center>
           <Center>
             <Grid templateColumns='repeat(3, 1fr)' gap={5} m={5} alignItems={"center"}>
@@ -36,7 +53,7 @@ function Home() {
         <Center>
           <Box width={"80%"} mt={10}>
             <Center><Text mt={5} fontSize={"18px"} fontWeight={"500"} color={"orangered"}>Here are more reasons</Text></Center>
-            <Center><Text mt={1} fontWeight={"800"} fontSize={"60px"}> Why choose Great Learning courses?</Text></Center>
+            <Center><Text mt={1} fontWeight={"800"} fontSize={"60px"}> Why choose Edu Connect courses?</Text></Center>
             <Flex mt={8}>
               <Center>
                 <Image src='/img1.jpg' alt='img' pl={"100px"} transition={"all 1s ease-in-out"} _hover={{ transform: "scale(1.02)" }} />
@@ -81,7 +98,7 @@ function Home() {
             <Flex mt={8}>
               <Box width={"50%"} mt={"75px"}>
                 <center>
-                  <Text fontWeight={"600"} fontSize={"35px"} mt={6} flexWrap={"wrap"}>GL Excelerate Dedicated Career Support</Text>
+                  <Text fontWeight={"600"} fontSize={"35px"} mt={6} flexWrap={"wrap"}>EC Excelerate Dedicated Career Support</Text>
                 </center>
                 <Center>
                   <Text color={"#8c7f7b"} mt={5} textAlign={"center"}>We offer mock interviews to prep for your dream job. Participate in hackathons and career fairs to stay ahead of others.</Text>
@@ -159,89 +176,8 @@ function Home() {
             <Image src='/learnersbanner.png' alt='map' mt={8} />
           </Box>
         </Center>
-        <Box color={"#b3b3b3"} bg={"black"}>
-          <Container as={Stack} maxW={'full'} py={10} >
-            <SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} spacing={8}>
-              <Stack align={'flex-start'}>
-                <Heading>Product</Heading>
-                <Box as="a" href={'#'}>
-                  Overview
-                </Box>
-                <Stack direction={'row'} align={'center'} spacing={2}>
-                  <Box as="a" href={'#'}>
-                    Features
-                  </Box>
-                </Stack>
-                <Box as="a" href={'#'}>
-                  Tutorials
-                </Box>
-                <Box as="a" href={'#'}>
-                  Pricing
-                </Box>
-                <Box as="a" href={'#'}>
-                  Releases
-                </Box>
-              </Stack>
-              <Stack align={'flex-start'}>
-                <Heading>Company</Heading>
-                <Box as="a" href={'#'}>
-                  About Us
-                </Box>
-                <Box as="a" href={'#'}>
-                  Press
-                </Box>
-                <Box as="a" href={'#'}>
-                  Careers
-                </Box>
-                <Box as="a" href={'#'}>
-                  Contact Us
-                </Box>
-                <Box as="a" href={'#'}>
-                  Partners
-                </Box>
-              </Stack>
-              <Stack align={'flex-start'}>
-                <Heading>Legal</Heading>
-                <Box as="a" href={'#'}>
-                  Cookies Policy
-                </Box>
-                <Box as="a" href={'#'}>
-                  Privacy Policy
-                </Box>
-                <Box as="a" href={'#'}>
-                  Terms of Service
-                </Box>
-                <Box as="a" href={'#'}>
-                  Law Enforcement
-                </Box>
-                <Box as="a" href={'#'}>
-                  Status
-                </Box>
-              </Stack>
-              <Stack align={'flex-start'}>
-                <Heading>Follow Us</Heading>
-                <Box as="a" href={'#'}>
-                  Facebook
-                </Box>
-                <Box as="a" href={'#'}>
-                  Twitter
-                </Box>
-                <Box as="a" href={'#'}>
-                  Dribbble
-                </Box>
-                <Box as="a" href={'#'}>
-                  Instagram
-                </Box>
-                <Box as="a" href={'#'}>
-                  LinkedIn
-                </Box>
-              </Stack>
-            </SimpleGrid>
-          </Container>
-          <Text pt={6} fontSize={'sm'} textAlign={'center'} p={2}>
-            © 2022 EDUCONNECT. All rights reserved
-          </Text>
-        </Box>
+        {/* <Footer/> */}
+        {/* <Quiz/> */}
       </Box>
     </>
   )

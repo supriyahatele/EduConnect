@@ -56,7 +56,8 @@ function Courses() {
   if(isLoading ) return <div>loading...</div>
   if(isError) return <div>error</div>
   return (
-    <Box width={"90%"} margin={"auto"}textAlign={"center"} >
+    <Box textAlign={"center"} backgroundColor={"#1a202c"} color={"#fff"} >
+      <Box width={"90%"} margin={"auto"}>
     {authUser.role === 'educator' && (
   <>
     <Button onClick={onOpen} mt={4}>
@@ -67,24 +68,67 @@ function Courses() {
     )}
   </>
 )}
-      <Box display={'flex'} width={"45%"} margin={"auto"} gap={"30px"} mt={"30px"} mb={"20px"}>
-      <Box >
-        <Input
+      <Box  display={'flex'} flexDirection={{
+          base: 'column',
+          sm: 'column',
+          md: 'row',
+          lg: 'row',
+          xl: 'row',
+          '2xl': 'row'
+        }}
+         width={{
+          base: '75%',
+          sm: '60%',
+          md: '70%',
+          lg: '45%',
+          xl: '45%',
+          '2xl': '45%'
+        }} margin={"auto"} gap={"30px"}  mb={"20px"}>
+      <Box  width={{
+          base: '250px',
+          sm: '300px',
+          md: '200px',
+          lg: '300px',
+          xl: '300px',
+          '2xl': '300px'
+        }}>
+        <Input mt={"20px"}
           type="text"
-          placeholder="Search products..."
+          placeholder="Search course..."
           value={search}
           onChange={handleSearchChange}
         />
       </Box>
-      <Box display={"flex"} gap={"10px"}  width={"300px"}>
-        <Select value={sortBy} onChange={handleSortChange} >
-          <option value="">Sort by</option>
-          <option value="price">Price</option>
-          <option value="educator">Educator</option>
+      <Box display={"flex"} gap={"10px"}  width={{
+          base: '250px',
+          sm: '300px',
+          md: '300px',
+          lg: '300px',
+          xl: '300px',
+          '2xl': '300px'
+        }}>
+        <Select value={sortBy} onChange={handleSortChange}  mt={"20px"} width={{
+          base: '250px',
+          sm: '200px',
+          md: '200px',
+          lg: '300px',
+          xl: '300px',
+          '2xl': '300px'
+        }}>
+          <option style={{backgroundColor:"#1a202c", color:"#fff"}} value="">Sort by</option>
+          <option style={{backgroundColor:"#1a202c", color:"#fff"}} value="price">Price</option>
+          <option style={{backgroundColor:"#1a202c", color:"#fff"}} value="educator">Educator</option>
         </Select>
-        <Select value={sortOrder} onChange={handleOrderChange} >
-          <option value="asc">Low to High</option>
-          <option value="desc">High to Low</option>
+        <Select value={sortOrder} onChange={handleOrderChange} mt={"20px"} width={{
+          base: '250px',
+          sm: '200px',
+          md: '200px',
+          lg: '300px',
+          xl: '300px',
+          '2xl': '300px'
+        }} >
+          <option style={{backgroundColor:"#1a202c", color:"#fff"}} value="asc">Low to High</option>
+          <option style={{backgroundColor:"#1a202c", color:"#fff"}} value="desc">High to Low</option>
         </Select>
       </Box>
     </Box>
@@ -97,36 +141,49 @@ function Courses() {
       <Heading>Courses  we offer</Heading>
       <Box
         display={"grid"}
-        gridTemplateColumns={"repeat(3,1fr)"}
+        gridTemplateColumns = {{
+          base: 'repeat(1,1fr)',
+          sm: 'repeat(1,1fr)',
+          md: 'repeat(2,1fr)',
+          lg: 'repeat(3,1fr)',
+          xl: 'repeat(3,1fr)',
+          '2xl': 'repeat(3,1fr)'
+        }}
+        // gridTemplateColumns={"repeat(3,1fr)"}
         gap={"20px"}
         padding={"10px"}
         textAlign={"center"}
-        centerContent={true}
-        justifyContent={"center"}
+       
       >
         {courses?.map((course) => (
           <Box
             key={course?._id}
             boxShadow='xl' p='6' rounded='md' bg='white'
-            padding={"10px"}
+            padding={"5px"}
           >
             <Image src={course.imageUrl} width={"100%"}/>
-            <h1>{course?.courseName}</h1>
-            <Text fontWeight={"800"}>{course?.educator}</Text>
-            <h1>{course?.price}</h1>
-            <h1>
-              {course?.techStack?.map((tech) => {
+            <Box width={"80%"} margin={"auto"} textAlign={"center"}>  
+            <Text color={'black'}fontSize={"20"} fontWeight={"medium"}>{course.courseName}</Text>
+            </Box>
+            <Text  color={'black'} fontWeight={"medium"} >{` Instructor ${course.educator}`}</Text>
+            <Text color={'black'}>{`course fees:${course.price} ₹`}</Text>
+            <Box color={'black'} height={'60px'} width={"80%"} margin={"auto"} textAlign={"center"}>
+              <Text>
+               What You will learn :
+              {course.techStack.map((tech) => {
                 let newString = "";
                 return (newString += tech + " ");
               })}
-            </h1>
-            <Button onClick={() => handleClick(course._id)} color={"white"} backgroundColor={"blue.400"} >
+              </Text>
+            </Box>
+            <Button onClick={() => handleClick(course._id)} mt={"10px"}color={"white"} backgroundColor={"#196ae5"} >
               view all details
             </Button>
             
           </Box>
         ))}
       </Box>
+    </Box>
     </Box>
   );
 }
