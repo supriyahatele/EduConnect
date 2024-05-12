@@ -20,13 +20,17 @@ export const postCourse= (payload)=> {
 }
 
 
- export const getCourses=()=>{
+ export const getCourses=(page,search,sortBy,sortOrder)=>{
    return  async (dispatch)=>{
     dispatch({type:FetchCourseLoading})
     try {
-        let res= await  axios.get("http://localhost:3000/courses/")
-        console.log(res.data)
-        dispatch({type:FetchCourseSuccess,payload:res.data})
+        let url = `http://localhost:3000/courses/?page=${page}&search=${search}`;
+      if (sortBy) {
+        url += `&sortBy=${sortBy}&sortOrder=${sortOrder}`;
+      }
+        let res= await  axios.get(url)
+        console.log(res.data.courseData)
+        dispatch({type:FetchCourseSuccess,payload:res.data.courseData})
     } catch (error) {
         dispatch({type:FetchCourseFailure})
     }
@@ -34,7 +38,7 @@ export const postCourse= (payload)=> {
  }
 
 
- export const editTodo=(payload)=> {
+ export const editCourse=(payload)=> {
     return  async (dispatch)=>{
         dispatch({type:FetchCourseLoading})
         try{

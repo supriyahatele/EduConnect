@@ -7,9 +7,10 @@ const EnrollmentRouter = express.Router();
 
 
 // Make Payment (Enroll in a Course)
+// auth,
 EnrollmentRouter.post('/enroll',auth, async (req, res) => {
     try {
-        const { courseID, paymentMethod,price,status } = req.body;
+        const { courseID, paymentMethod,status } = req.body;
         const id=req.id
         const checkEnrollment= await  EnrollmentModel.findOne({studentID:id, courseID})
        
@@ -20,7 +21,6 @@ EnrollmentRouter.post('/enroll',auth, async (req, res) => {
             studentID :id,
             courseID,
             paymentMethod,
-            price,
             status  
         });
         await enroll.save();

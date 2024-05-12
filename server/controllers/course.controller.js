@@ -4,9 +4,32 @@ require('dotenv').config();
 // get all course list only acces for admin
 
 const allCourse = async (req, res) => {
+    const {page=1,limit=6,sortBy, sortOrder,search}=req.query
+   
+        
     try{
-        const courseData = await CourseModel.find();
-        res.status(200).json(courseData);
+        let filter = {};
+        let sort = {};
+        if (search) {
+            filter = {
+                $or: [
+                    { courseName: { $regex: search, $options: 'i' } },
+                    { educator: { $regex: search, $options: 'i' } }
+                ]
+            };
+        }
+        if (sortBy && ['price', 'educator'].includes(sortBy)) {
+            sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
+        } else {
+            sort[sortBy] = 1;
+        }
+        const skip=(page-1)*limit;
+
+        const courseData = await CourseModel.find(filter).sort(sort).limit(parseInt(limit)).skip(skip)
+        const count=await CourseModel.countDocuments();
+        const totalPages= Math.ceil(count/limit)
+        
+        res.status(200).json({courseData:courseData,totalPages:totalPages,currentPage:page,totalCourses:count});
 
     }catch(error){
         res.status(500).json({message : error.message})
@@ -38,8 +61,8 @@ const courseById =  async (req, res) => {
 // createCourse
 const createCourse = async (req, res) => {
     try{
-        const {courseName,educator,price,techStack,rating,reviews,imageUrl} = req.body;
-        // const file=req.file
+        const {courseName,educator,price,techStack,imageUrl,rating,reviews,imageUrl} = req.body;
+        // 
 
         console.log(req.body);
         if(courseName && educator && techStack.length > 0 && price && imageUrl && rating && reviews ){
