@@ -20,8 +20,13 @@ const Login= () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     axios.post('http://localhost:3000/users/login',formData)
     .then((res) => {
+      if(res.data.error){
+        setFormData({email:'',password:''})
+        return alert(res.data.error);
+      }
       loginUser(res.data.refreshToken)
       navigate('/');
     })
@@ -30,20 +35,18 @@ const Login= () => {
     })
   };
 
-  const handleFocus = (e) => {
-    e.target.placeholder = '';
-  };
+
 
   const handleBlur = (e) => {
     e.target.placeholder = e.target.name === 'email' ? 'Enter your email' : 'Enter your password';
   };
 
   return (
-    <Box bgColor={''}>
+    <Box bg={"#1a202c"} color={"#fff"}>
     <Box minHeight="95vh"  display="flex" alignItems="center" justifyContent="center" >
       <Box w="90%" p="4" display="flex">
       
-        <Box p="6" bg="white" borderRadius="md" boxShadow = "rgba(3, 102, 214, 0.3) 0px 0px 0px 3px" maxW={'500px'} flexGrow={1} bgColor={''}>
+        <Box p="6" borderRadius="md" boxShadow = "rgba(3, 102, 214, 0.3) 0px 0px 0px 3px" maxW={'500px'} flexGrow={1} >
           <Text fontSize="sm" color="gray.500" textAlign="center" mb="4">
             Enter your credentials below to login.
           </Text>
@@ -56,15 +59,15 @@ const Login= () => {
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
               <FormControl isRequired>
                 <InputGroup>
-              <InputLeftElement pointerEvents="none" children={<FontAwesomeIcon icon={faEnvelope} color="gray.300" />} />
+              <InputLeftElement pointerEvents="none" />
                 <Input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  onFocus={handleFocus}
                   onBlur={handleBlur}
                   bgColor={'aliceblue'}
+                  color={'black'}
                   borderBottom={'1px solid aliceblue'}
                   _placeholder={{ color: 'inherit' }}
                   placeholder="Enter your email"
@@ -74,13 +77,13 @@ const Login= () => {
               </FormControl>
               <FormControl isRequired>
                 <InputGroup>
-                <InputLeftElement pointerEvents="none" children={<FontAwesomeIcon icon={faLock} color="gray.300" />} />
+                <InputLeftElement pointerEvents="none"  />
                 <Input
                   type="password"
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  onFocus={handleFocus}
+                color={'black'}
                   bgColor={'aliceblue'}
                   onBlur={handleBlur}
                   _placeholder={{ color: 'inherit' }}
