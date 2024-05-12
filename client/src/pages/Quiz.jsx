@@ -1,43 +1,12 @@
-import { Box, Center, Heading, Text } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
-function Quiz() {
-    const [questions, setQuestions] = useState([]);
-    const [answer, setAnswer] = useState({});
-    const [marks, setmarks] = useState(0);
-    console.log(questions);
-
-    useEffect(() => {
-        const fetchQuiz = async () => {
-            try {
-                const res = await fetch("http://localhost:3000/quiz/getQuiz");
-                setQuestions(res.data);
-            } catch (error) {
-                console.error('Error fetching questions:', error);
-            }
-        }
-        fetchQuiz();
-    }, []);
-
-    return (
-        <>
-            <Box bg={"#1a202c"} color={"#fff"}>
-                <Center><Text mt={1} fontWeight={"800"} fontSize={"60px"}>Test Your Potential</Text></Center>
-                <Box>
-                    {questions?.map((el)=>(
-                        <Box key={el._id}>
-                            <Text>{el.question}</Text>
-                        </Box>
-                    ))}
-                </Box>
-            </Box>
-        </>
-    )
+const Quiz = () => {
+  return (
+   <QuizData/>
+  )
 }
 
-export default Quiz
-
-
+export  {Quiz}
 
 
 

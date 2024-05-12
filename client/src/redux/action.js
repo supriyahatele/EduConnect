@@ -1,4 +1,4 @@
-import {  FetchCourseFailure, FetchCourseLoading, FetchCourseSuccess,  PostCourseSuccess } from "./actionTypes"
+import {  FETCH_QUIZ_FAILURE, FETCH_QUIZ_REQUEST, FETCH_QUIZ_SUCCESS, FetchCourseFailure, FetchCourseLoading, FetchCourseSuccess,  PostCourseSuccess } from "./actionTypes"
 import  axios from "axios"
 
 export const postCourse= (payload)=> {
@@ -28,7 +28,7 @@ export const postCourse= (payload)=> {
         url += `&sortBy=${sortBy}&sortOrder=${sortOrder}`;
       }
         let res= await  axios.get(url)
-        console.log(res.data.courseData)
+        // console.log(res.data.courseData)
         dispatch({type:FetchCourseSuccess,payload:res.data.courseData})
     } catch (error) {
         dispatch({type:FetchCourseFailure})
@@ -64,3 +64,20 @@ export const postCourse= (payload)=> {
         dispatch({type:FetchCourseFailure})   
     }
     }
+
+    export const getQuizData=(token)=>{
+        return async(dispatch)=>{
+            dispatch({type:FETCH_QUIZ_REQUEST})
+            try{
+                const res= await axios.get("http://localhost:3000/quiz/getQuiz",{
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  })
+                dispatch({type:FETCH_QUIZ_SUCCESS,payload:res?.data?.quiz})
+                // console.log(res?.data.quiz)
+            }catch(e){
+                dispatch({type:FETCH_QUIZ_FAILURE})
+            }
+        }
+     }
