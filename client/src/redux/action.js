@@ -1,4 +1,4 @@
-import {  FetchCourseFailure, FetchCourseLoading, FetchCourseSuccess,  PostCourseSuccess } from "./actionTypes"
+import {  FETCH_QUIZ_FAILURE, FETCH_QUIZ_REQUEST, FETCH_QUIZ_SUCCESS, FetchCourseFailure, FetchCourseLoading, FetchCourseSuccess,  PostCourseSuccess } from "./actionTypes"
 import  axios from "axios"
 
 export const postCourse= (payload)=> {
@@ -64,3 +64,16 @@ export const postCourse= (payload)=> {
         dispatch({type:FetchCourseFailure})   
     }
     }
+
+    export const getQuizData=()=>{
+        return async(dispatch)=>{
+            dispatch({type:FETCH_QUIZ_REQUEST})
+            try{
+                const res= await axios.get("https://dbioz2ek0e.execute-api.ap-south-1.amazonaws.com/mockapi/get-quiz")
+                dispatch({type:FETCH_QUIZ_SUCCESS,payload:res.data})
+                console.log(res.data)
+            }catch(e){
+                dispatch({type:FETCH_QUIZ_FAILURE})
+            }
+        }
+     }
