@@ -1,12 +1,8 @@
-import { Box, Button, Select } from "@chakra-ui/react";
+import { Box, Center } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useState } from "react";
-import { useContext } from "react";
 import React, { useContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { AuthContext } from "../Contexts/AuthContextProvider";
 import { Link, useParams } from "react-router-dom";
 import { AuthContext } from "../Contexts/AuthContextProvider";
 
@@ -17,13 +13,9 @@ const initialState = {
 }
 
 const SingleCourse = () => {
-    const navigate=useNavigate()
-    const {authUser} = useContext(AuthContext)
   const { id } = useParams();
-  const [course, setCourse] = useState(null);
-  const [showEnrollForm, setShowEnrollForm] = useState(false);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
-  
+  const [course, setCourse] = useState(initialState);
+  const {authUser} = useContext(AuthContext)
   useEffect(() => {
     const getData=async ()=>{
         setCourse(prev => ({
@@ -51,10 +43,58 @@ const SingleCourse = () => {
           }))
         }
     }
-    getData();
+    getData()
   }, []);
   if(course.isLoading) return <Center>loading</Center>
   if(course.isError) return <Center>error</Center>
+  return (
+    <Box>
+      <Box>
+        <Link to='assignments'>assignments</Link>
+        <Link to='videos'>videos</Link>
+      </Box>
+      <Box textAlign={'center'}>
+        <div>SingleCourse</div>
+        <Box textAlign={'center'}>
+          <h1>{course.data?.courseName}</h1>
+          <h1>{course.data?.educator}</h1>
+          <h1>{course.data?.price}</h1>
+          <h1>
+            {course.data?.techStack?.map((tech) => {
+              let newString = "";
+              return (newString += tech + " ");
+            })}
+          </h1>
+        </Box>
+      </Box>
+    </Box>
+  );
+};
+
+export { SingleCourse };
+import { Box, Button, Select } from "@chakra-ui/react";
+import axios from "axios";
+import React, { useState } from "react";
+import { useContext } from "react";
+import { useEffect } from "react";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { AuthContext } from "../Contexts/AuthContextProvider";
+
+const SingleCourse = () => {
+    const navigate=useNavigate()
+    const {authUser} = useContext(AuthContext)
+  const { id } = useParams();
+  const [course, setCourse] = useState(null);
+  const [showEnrollForm, setShowEnrollForm] = useState(false);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+  
+  useEffect(() => {
+    const getData = async () => {
+      const data = await axios.get(`http://localhost:3000/courses/${id}`);
+      setCourse(data?.data?.course);
+    }
+    getData();
+  }, []);
 
   const handleEnroll = async () => {
     setShowEnrollForm(true);
@@ -78,24 +118,6 @@ const SingleCourse = () => {
   };
 
   return (
-    <Box>
-      <Box>
-        <Link to='assignments'>assignments</Link>
-        <Link to='videos'>videos</Link>
-      </Box>
-      <Box textAlign={'center'}>
-        <div>SingleCourse</div>
-        <Box textAlign={'center'}>
-          <h1>{course.data?.courseName}</h1>
-          <h1>{course.data?.educator}</h1>
-          <h1>{course.data?.price}</h1>
-          <h1>
-            {course.data?.techStack?.map((tech) => {
-              let newString = "";
-              return (newString += tech + " ");
-            })}
-          </h1>
-        </Box>
     <Box textAlign={'center'}>
       <div>SingleCourse</div>
       <Box textAlign={'center'}>
