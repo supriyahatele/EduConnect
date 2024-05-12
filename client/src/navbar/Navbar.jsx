@@ -8,9 +8,9 @@ import { AuthContext } from '../Contexts/AuthContextProvider';
 const pages = [
     { id: 1, to: "/", name: "Home" },
     // { id: 2, to: "/about", name: "About" },
-    { id: 3, to: "/courses", name: "Courses" },
+    { id: 2, to: "/courses", name: "Courses" },
     // { id: 4, to: "/login", name: "Login" },
-    { id: 4, to: "/profile", name: "Profile" },
+    { id: 3, to: "/profile", name: "Profile" },
 ];
 
 function Navbar() {
@@ -18,7 +18,13 @@ function Navbar() {
 
     return (
         <>
-            <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} p={5} boxShadow='base' bg='white' >
+            <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} p={5} boxShadow='base' bg='white' position="sticky"
+      top="0"
+      zIndex="sticky"
+      backgroundColor="white"
+    //   boxShadow="base"
+    //   p={5}
+      >
                 <Image width={"150px"} height={"30px"} src='/logo.png' alt='logo' />
                 {/* <Text fontWeight={800} color={"#196ae5"}>EDU CONNECT...</Text> */}
                 {pages.map((el) => (
@@ -40,10 +46,8 @@ function Navbar() {
                     style={{
                         display: "inline-block",
                         padding: "8px 20px",
-                        // backgroundColor: "#196ae5",
                         color: "#196ae5",
                         fontWeight: "600",
-                        // color: "white",
                         textDecoration: "none",
                         borderRadius: "5px",
                         boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
