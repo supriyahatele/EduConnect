@@ -23,8 +23,8 @@ EduConnect is an innovative education platform designed to facilitate interactiv
 Frontend | Backend | Fullstack
 
 ## Deplolyed App
-    Frontend: https://shop-cart-flame.vercel.app/
-    Backend: https://shop-cart-backend-ok10.onrender.com/
+    Frontend: https://edu-connect-kappa.vercel.app/
+    Backend:https://educonnect-backend-5h8y.onrender.com/
 
 
 ## Directory Structure
