@@ -1,11 +1,6 @@
 # EduConnect-
 
-
-
-
-<img src="./frontend/public/ShopCart_Logo.png" width="150px">
-
-
+<img src="./client/public/logo.png" width="150px">
 
 ## Introduction
 EduConnect is an innovative education platform designed to facilitate interactive learning experiences, connecting students, educators, and educational content creators. Inspired by platforms like Coursera and Udemy, EduConnect aims to offer a wide range of courses, personalized learning paths to enhance the learning journey. EduConnect is to provide a centralized platform for high-quality online education, allowing users to enroll in courses, track their progress, and participate in collaborative learning activities.
@@ -15,8 +10,8 @@ EduConnect is an innovative education platform designed to facilitate interactiv
     - Team Lead: [Supriya Hatele] 
     - Team Members: 
         [Supriya Hatele] 
-        [Praveen Kumar] 
-        [Sujeet ]
+        [Pavan Kumar] 
+        [Sujeet Kumar]
        
 
 ## Project Type
@@ -53,16 +48,6 @@ Frontend | Backend | Fullstack
                 ├── components
                 │   ├── Assignmnets
                 │   ├── Videos
-                         ├── CourseCreate.jsx
-                         ├── MyCourseCard.jsx
-                         ├── MyCourse.jsx
-                         ├── UpdateCourse.jsx
-                    ├── Products
-                │   ├── Logout.tsx
-                │   ├── PrivateRoute.tsx
-                │   ├── SearchBarHome.tsx
-                │   └── WildCard.tsx
-                │
                 ├── contexts
                 │   └── AuthContextProvider.jsx
                 │── navbar
@@ -145,27 +130,35 @@ npm run server
 
 ### SignupPage/RegisterPage
 
-<img src="./ScreenShots/Signup.png" height="250px" width="700px">
+<img src="./ScreenShots/IMG-20240513-WA0002.jpg" height="250px" width="700px">
 
 ### LoginPage
 
-<img src="./ScreenShots/Login Page.png" height="250px" width="700px">
+<img src="./ScreenShots/login.jpg" height="200px" width="700px">
 
 ### HomePage
 
-<img src="./ScreenShots/Home page.png" height="1750px" width="700px">
+<img src="./ScreenShots/IMG-20240513-WA0005.jpg" height="300px" width="700px">
 
-### ProductsPage
+### Courses Page
 
-<img src="./ScreenShots/Products page.png" height="1050px" width="700px">
+<img src="./ScreenShots/courses.jpg" height="500px" width="700px">
 
-### CartPage
+### Single Course Page
 
-<img src="./ScreenShots/Cart page.png" height="800px" width="700px">
+<img src="./ScreenShots/singlecourse.jpg" height="250px" width="700px">
 
-### OrdersPage
+### Assignment page
 
-<img src="./ScreenShots/Orders page.png" height="650px" width="700px">
+<img src="./ScreenShots/assignments.jpg" height="250px" width="700px">
+
+### SigleAssignment Page
+
+<img src="./ScreenShots/singleassignment.jpg" height="200px" width="700px">
+
+### videos page
+
+<img src="./ScreenShots/videos.jpg" height="150px" width="700px">
 
 ## Credentials:
 
