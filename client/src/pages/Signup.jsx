@@ -6,7 +6,7 @@ import { faUser, faLock, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { extendTheme } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import { BASEURL } from '../config'
 const technologies = ['React', 'Vue.js', 'Angular', 'Node.js', 'Python', 'Java'];
 
 const Signup = () => {
@@ -46,7 +46,7 @@ const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:3000/users/register', formData)
+    axios.post(`${BASEURL}/users/register`, formData)
     .then(res => {
       if(res.data.message ){
         console.log(res.data.message);

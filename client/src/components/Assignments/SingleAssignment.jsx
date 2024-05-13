@@ -1,8 +1,9 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faClock, faInfoCircle, faUserCircle, faUser } from '@fortawesome/free-solid-svg-icons';
-import { Box,Button,Flex,FormLabel,Heading,IconButton,Input,Text, useDisclosure, useToast } from '@chakra-ui/react';
+import { Box,Button,Flex,FormLabel,Heading,IconButton,Input,Spinner,Text, useDisclosure, useToast } from '@chakra-ui/react';
 import { useNavigate, useParams } from 'react-router-dom'
+import { BASEURL } from '../../config'
 import {
     AlertDialog,
     AlertDialogBody,
@@ -34,7 +35,7 @@ const SingleAssignment = () => {
             isError:false,
             isLoading:true
         }))
-        axios.get(`http://localhost:3000/courses/${id}/getAssignment/${assignment_id}`,{
+        axios.get(`${BASEURL}/courses/${id}/getAssignment/${assignment_id}`,{
             headers : {
                 'Authorization':`Bearer ${authUser.token}`
             }
@@ -69,7 +70,7 @@ const SingleAssignment = () => {
 
     const fetchSubmission = () =>{
      
-        axios.get(`http://localhost:3000/submissions/submit/${assignment_id}`,{
+        axios.get(`${BASEURL}/submissions/submit/${assignment_id}`,{
             headers : {
                 'Authorization':`Bearer ${authUser.token}`
             }
@@ -88,7 +89,7 @@ const SingleAssignment = () => {
         .catch(err => console.log(err))
     }
     const handleSubmit = () => {
-        axios.post(`http://localhost:3000/submissions/submit/${assignment_id}`,{submissionUrl:url.current},{
+        axios.post(`${BASEURL}/submissions/submit/${assignment_id}`,{submissionUrl:url.current},{
             headers : {
                 'Authorization':`Bearer ${authUser.token}`
             }
@@ -116,7 +117,7 @@ const SingleAssignment = () => {
     }
     const handleEditUrl = () => {
       console.log(assignment_id);
-        axios.patch(`http://localhost:3000/submissions/updateSubmission/${assignment_id}`,{submissionUrl:url.current},{
+        axios.patch(`${BASEURL}/submissions/updateSubmission/${assignment_id}`,{submissionUrl:url.current},{
             headers : {
                 'Authorization':`Bearer ${authUser.token}`
             }
@@ -143,7 +144,16 @@ const SingleAssignment = () => {
 
     }
 
-    if(assignment.isLoading) return <Box>loading</Box>
+    if(assignment.isLoading) return <Box textAlign={'center'}>
+    <Spinner
+   thickness='4px'
+   speed='0.65s'
+   emptyColor='gray.200'
+   color='blue.500'
+   size='xl'
+   
+   />
+ </Box>
     if(assignment.isError) return <Box>error</Box>
   return (
     <>

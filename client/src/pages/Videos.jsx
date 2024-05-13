@@ -4,7 +4,8 @@ import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'
 import { VideoList } from '../components/Videos/VideoList';
 import { AuthContext } from '../Contexts/AuthContextProvider';
-import { useToast } from '@chakra-ui/react';
+import { Box, Spinner, useToast } from '@chakra-ui/react';
+import { BASEURL } from '../config'
 const initialState = {
   isLoading: false,
   data : [],
@@ -21,7 +22,7 @@ const Videos = () => {
         isLoading: true,
         isError:false
       }))
-      axios.get(`http://localhost:3000/courses/${id}/videos`,{
+      axios.get(`${BASEURL}/courses/${id}/videos`,{
         headers:{
           'Authorization' : `Bearer ${authUser.token}`
         }
@@ -60,7 +61,16 @@ const Videos = () => {
       })
 
     }
-    if(videos.isLoading) return <h1>loading</h1>
+    if(videos.isLoading) return <Box textAlign={'center'}>
+    <Spinner
+   thickness='4px'
+   speed='0.65s'
+   emptyColor='gray.200'
+   color='blue.500'
+   size='xl'
+   
+   />
+ </Box>
     if(videos.isError) return <h2>error</h2>
   return (
     <>

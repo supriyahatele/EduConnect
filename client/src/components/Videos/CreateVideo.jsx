@@ -3,7 +3,7 @@ import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody,
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthContextProvider';
-
+import { BASEURL } from '../../config'
 const CreateVideo = ({onClose,isOpen,addVideo}) => {
     const [isLoading,setIsLoading] = useState(false);
     const [title,setTitle] = useState('');
@@ -19,7 +19,7 @@ const CreateVideo = ({onClose,isOpen,addVideo}) => {
     videoData.append('video',file)
     try {
         setIsLoading(true);
-        const response = await axios.post(`http://localhost:3000/courses/${id}/videos/uploads`, videoData, {
+        const response = await axios.post(`${BASEURL}/courses/${id}/videos/uploads`, videoData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             'Authorization':`Bearer ${authUser.token}`

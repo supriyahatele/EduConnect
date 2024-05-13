@@ -2,7 +2,7 @@
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCourses } from "../redux/action";
-import { Box, Button, Heading, useDisclosure, Image,Input,Select,Text, useToast } from "@chakra-ui/react";
+import { Box, Button, Heading, useDisclosure, Image,Input,Select,Text, useToast, Spinner } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { CourseCreate } from "../components/CourseCreate";
 import { postCourse } from '../redux/action';
@@ -60,7 +60,16 @@ function Courses() {
   };
 
   console.log(courses);
-  if (isLoading) return <div>loading...</div>
+  if (isLoading) return<Box textAlign={'center'}>
+     <Spinner
+    thickness='4px'
+    speed='0.65s'
+    emptyColor='gray.200'
+    color='blue.500'
+    size='xl'
+    
+    />
+  </Box>
   if (isError) return <div>error</div>
   return (
     <Box textAlign={"center"} backgroundColor={"#1a202c"} color={"#fff"} >

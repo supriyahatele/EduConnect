@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { BASEURL } from '../config'
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../Contexts/AuthContextProvider';
-import { Box, Flex, Text, Badge, VStack } from "@chakra-ui/react";
+import { Box, Flex, Text, Badge, VStack, Spinner } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faUser, faCalendar, faCode } from "@fortawesome/free-solid-svg-icons";
 function Profile() {
@@ -11,7 +12,7 @@ const [isError,setIsError] = useState(false);
 const {authUser} = useContext(AuthContext);
   useEffect(() => {
     setIsLoading(true);
-    axios.get(`http://localhost:3000/users/profile`, {
+    axios.get(`${BASEURL}/users/profile`, {
       headers : {
         'Authorization' : `Bearer ${authUser.token}`
       }
@@ -30,7 +31,16 @@ const {authUser} = useContext(AuthContext);
 
 
   },[authUser])
-  if(isLoading) return <Box>loading</Box>
+  if(isLoading) return <Box textAlign={'center'}>
+  <Spinner
+ thickness='4px'
+ speed='0.65s'
+ emptyColor='gray.200'
+ color='blue.500'
+ size='xl'
+ 
+ />
+</Box>
   if(isError) return <Box>error</Box>
   return (
     <Box bg={"#1a202c"} color={"#fff"} p={3}>

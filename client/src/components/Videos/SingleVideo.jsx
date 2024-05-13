@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AuthContext } from '../../Contexts/AuthContextProvider';
-import { Box, Button, IconButton, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, IconButton, Spinner, useDisclosure } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause, faExpand, faCompress } from '@fortawesome/free-solid-svg-icons';
-
+import { BASEURL } from '../../config'
 import axios from 'axios';
 
 const SingleVideo = () => {
@@ -20,7 +20,7 @@ const SingleVideo = () => {
             isLoading: true,
             isError:false
           }))
-          axios.get(`http://localhost:3000/courses/${id}/videos/${video_id}`,{
+          axios.get(`${BASEURL}/courses/${id}/videos/${video_id}`,{
             headers:{
               'Authorization' : `Bearer ${authUser.token}`
             }
@@ -45,11 +45,20 @@ const SingleVideo = () => {
 
 
     },[video_id,authUser])
-    if(video.isLoading) return <Box>loading</Box>
+    if(video.isLoading) return <Box textAlign={'center'}>
+    <Spinner
+   thickness='4px'
+   speed='0.65s'
+   emptyColor='gray.200'
+   color='blue.500'
+   size='xl'
+   
+   />
+ </Box>
     if(video.isError) return <Box>error</Box>
   return (
     <>
-    <Box display={'flex'} justifyContent={'center'}>
+    <Box display={'flex'} justifyContent={'center'} >
      <video width="400" controls>
         <source src = {video.data.videoUrl} type="video/mp4"/>
      </video>
