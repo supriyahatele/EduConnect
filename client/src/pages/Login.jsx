@@ -2,10 +2,10 @@ import  { useContext, useState } from 'react';
 import { Box,Image, VStack, FormControl, Input, Button, Text, Heading, InputGroup, InputLeftElement } from '@chakra-ui/react';
 
 import { Link, useNavigate} from 'react-router-dom'
+import { BASEURL } from '../config'
 import axios from 'axios'
 import { AuthContext } from '../Contexts/AuthContextProvider';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
+
 const Login= () => {
   const navigate = useNavigate()
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -21,7 +21,7 @@ const Login= () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    axios.post('http://localhost:3000/users/login',formData)
+    axios.post(`${BASEURL}/users/login`,formData)
     .then((res) => {
       if(res.data.error){
         setFormData({email:'',password:''})

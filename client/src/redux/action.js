@@ -1,11 +1,11 @@
 import {  FETCH_QUIZ_FAILURE, FETCH_QUIZ_REQUEST, FETCH_QUIZ_SUCCESS, FetchCourseFailure, FetchCourseLoading, FetchCourseSuccess,  AddCourseSuccess } from "./actionTypes"
 import  axios from "axios"
-
+import { BASEURL } from '../config'
 export const postCourse= (payload)=> {
    return async (dispatch)=>{
         dispatch({type:FetchCourseLoading})
         console.log('payload' ,payload);
-        axios.post("http://localhost:3000/courses/",payload)
+        axios.post(`${BASEURL}/courses/`,payload)
         .then(res => {
             console.log('response',res.data);
             dispatch({type:AddCourseSuccess, payload:res.data})
@@ -25,7 +25,7 @@ export const postCourse= (payload)=> {
    return  async (dispatch)=>{
     dispatch({type:FetchCourseLoading})
     try {
-        let url = `http://localhost:3000/courses/?page=${page}&search=${search}`;
+        let url = `${BASEURL}/courses/?page=${page}&search=${search}`;
       if (sortBy) {
         url += `&sortBy=${sortBy}&sortOrder=${sortOrder}`;
       }
@@ -43,7 +43,7 @@ export const postCourse= (payload)=> {
     return  async (dispatch)=>{
         dispatch({type:FetchCourseLoading})
         try{
-             await  axios.patch(`http://localhost:8080/todo/${payload.id}`,payload)
+             await  axios.patch(`${BASEURL}/courses/${payload.id}`,payload)
     
             dispatch(getCourses())
             console.log(payload)
@@ -60,7 +60,7 @@ export const postCourse= (payload)=> {
     async (dispatch)=>{
     dispatch({type:FetchCourseLoading})
     try{
-         await  axios.delete(`http://localhost:8080/todo/${id}`)
+         await  axios.delete(`${BASEURL}/courses/${id}`)
         dispatch(getCourses())
     }catch(e){
         dispatch({type:FetchCourseFailure})   
@@ -71,7 +71,7 @@ export const postCourse= (payload)=> {
         return async(dispatch)=>{
             dispatch({type:FETCH_QUIZ_REQUEST})
             try{
-                const res= await axios.get("http://localhost:3000/quiz/getQuiz",{
+                const res= await axios.get(`${BASEURL}/quiz/getQuiz`,{
                     headers: {
                       Authorization: `Bearer ${token}`,
                     },

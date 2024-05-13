@@ -1,9 +1,9 @@
 import  { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../Contexts/AuthContextProvider'
 import axios from 'axios'
-import { Box } from '@chakra-ui/react'
+import { Box, Spinner } from '@chakra-ui/react'
 import { MyCourseCard } from './MyCourseCard'
-
+import { BASEURL } from '../config'
 
 const MyCourses = () => {
     const {authUser} = useContext(AuthContext)
@@ -12,7 +12,7 @@ const MyCourses = () => {
     const [error,setError] = useState(false)
     useEffect(()=>{
         setLoading(true);
-        axios.get(`http://localhost:3000/courses/mycourses`,{
+        axios.get(`${BASEURL}/courses/mycourses`,{
             headers : {
                 'Authorization' : `Bearer ${authUser.token}`
             }
@@ -30,7 +30,16 @@ const MyCourses = () => {
         })
 
     },[authUser])
-    if(loading) return <Box>loading</Box>
+    if(loading) return <Box textAlign={'center'}>
+    <Spinner
+   thickness='4px'
+   speed='0.65s'
+   emptyColor='gray.200'
+   color='blue.500'
+   size='xl'
+   
+   />
+ </Box>
     if(error) return <Box>error</Box>
   return (
     <Box display={'flex'} flexWrap={'wrap'} alignItems={'center'}  p={4} gap={4} justifyContent={'center'}>

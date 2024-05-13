@@ -1,4 +1,4 @@
-import { Box, Button, Center, Heading, Image, Select, useDisclosure, Text } from "@chakra-ui/react";
+import { Box, Button, Center, Heading, Image, Select, useDisclosure, Text, Spinner } from "@chakra-ui/react";
 import axios from "axios";
 import  { useContext } from "react";
 import { useState } from "react";
@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../Contexts/AuthContextProvider";
 import { useDispatch, useSelector } from "react-redux";
+import { BASEURL } from '../config'
 import {
   getCourseFailure,
   getCourseLoading,
@@ -32,7 +33,7 @@ const SingleCourse = () => {
     const getData = async () => {
       dispatch({ type: getCourseLoading });
       try {
-        const data = await axios.get(`http://localhost:3000/courses/${id}`, {
+        const data = await axios.get(`${BASEURL}/courses/${id}`, {
           // headers:{
           //   'Authorization' : `Bearer ${authUser.token}`
           // }
@@ -58,7 +59,7 @@ const SingleCourse = () => {
   const handleSubmitEnrollment = async () => {
     // Perform enrollment with selected payment method
     await axios.post(
-      `http://localhost:3000/enrollments/enroll`,
+      `${BASEURL}/enrollments/enroll`,
       { courseID: id, paymentMethod: selectedPaymentMethod, status: true }, // Set status to true for enrollment,
       {
         headers: {
@@ -71,7 +72,16 @@ const SingleCourse = () => {
 
 
 
-  if (isLoading) return <Center>loading</Center>;
+  if (isLoading) return <Box textAlign={'center'}>
+  <Spinner
+ thickness='4px'
+ speed='0.65s'
+ emptyColor='gray.200'
+ color='blue.500'
+ size='xl'
+ 
+ />
+</Box>
   if (isError) return <Center>error</Center>;
 
   return (

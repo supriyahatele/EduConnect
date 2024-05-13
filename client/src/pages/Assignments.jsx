@@ -3,8 +3,8 @@ import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'
 import { AuthContext } from '../Contexts/AuthContextProvider';
-
-import { Box, Button, Center, useDisclosure, useToast } from '@chakra-ui/react';
+import { BASEURL } from '../config'
+import { Box, Button, Center, Spinner, useDisclosure, useToast } from '@chakra-ui/react';
 import { AssignmentList } from '../components/Assignments/AssignmentList';
 import { AssignmentCreate } from '../components/Assignments/AssignmentCreate';
 
@@ -26,7 +26,7 @@ const Assignments = () => {
             ...prev,
             isLoading : true
         }))
-        axios.get(`http://localhost:3000/courses/${id}/getAssignment`,{
+        axios.get(`${BASEURL}/courses/${id}/getAssignment`,{
             headers:{
               'Authorization' : `Bearer ${authUser.token}`
             }
@@ -56,7 +56,7 @@ const Assignments = () => {
     },[id,authUser])
     const handleAddAssignment = (payload) => {
 
-        axios.post(`http://localhost:3000/courses/${id}/createAssignment`,payload,{
+        axios.post(`${BASEURL}/courses/${id}/createAssignment`,payload,{
             headers:{
               'Authorization' : `Bearer ${authUser.token}`
             }
@@ -91,7 +91,7 @@ const Assignments = () => {
     }
 
     const handleDelete = (id) => {
-        axios.delete(`http://localhost:3000/assignments/deleteAssignment/${id}`,{
+        axios.delete(`${BASEURL}/assignments/deleteAssignment/${id}`,{
             headers:{
               'Authorization' : `Bearer ${authUser.token}`
             }
@@ -125,7 +125,16 @@ const Assignments = () => {
             console.log(err);
         })
     }
-    if(assignments.isLoading) return <Center>loading</Center>
+    if(assignments.isLoading) return <Box textAlign={'center'}>
+    <Spinner
+   thickness='4px'
+   speed='0.65s'
+   emptyColor='gray.200'
+   color='blue.500'
+   size='xl'
+   
+   />
+ </Box>
     if(assignments.isError) return <Center>error</Center>
   return (
     <div>

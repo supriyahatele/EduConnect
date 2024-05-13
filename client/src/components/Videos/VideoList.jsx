@@ -27,7 +27,7 @@ const VideoList = ({videos,addVideo}) => {
     )}
   </>
 )}
-      <Box display={'flex'} justifyContent={'center'} m={3}>
+      <Box display={'flex'} flexDir={'column'} gap={4} justifyContent={'center'} m={3}>
         {videos.map(video => {
             return (
                 <Box
