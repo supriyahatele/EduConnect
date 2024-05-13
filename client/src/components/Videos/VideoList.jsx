@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../Contexts/AuthContextProvider';
 import { CreateVideo } from './CreateVideo';
-const VideoList = ({videos,addVideo}) => {
+const VideoList = ({videos,addVideo,handleDelete}) => {
     console.log(videos);
     const {authUser} = useContext(AuthContext)
    const navigate = useNavigate()
@@ -60,6 +60,7 @@ const VideoList = ({videos,addVideo}) => {
                   )}
                 </Box>
                 <Button  _hover={{ bg: '#2d3748' }} onClick={() =>navigate(`${video._id}`)}>Show</Button>
+                {authUser.role === 'educator' && <Button bgColor={'red.600'} onClick={() =>handleDelete(video._id)}>Delete</Button>}
               </Box>
             )
         })}

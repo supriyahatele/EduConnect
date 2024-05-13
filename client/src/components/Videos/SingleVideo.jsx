@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AuthContext } from '../../Contexts/AuthContextProvider';
-import { Box, Button, IconButton, Spinner, useDisclosure } from '@chakra-ui/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faPause, faExpand, faCompress } from '@fortawesome/free-solid-svg-icons';
+import { Box, Button, Heading, Text, Spinner, useDisclosure } from '@chakra-ui/react';
+
 import { BASEURL } from '../../config'
 import axios from 'axios';
 
@@ -58,11 +57,13 @@ const SingleVideo = () => {
     if(video.isError) return <Box>error</Box>
   return (
     <>
+    <Heading p={2} color="#1a202c">{video.title}</Heading>
     <Box display={'flex'} justifyContent={'center'} >
      <video width="400" controls>
         <source src = {video.data.videoUrl} type="video/mp4"/>
      </video>
      </Box>
+     <Text>{video.notes}</Text>
      <Button m={2} size={'sm'} bgColor={'blue.600'} onClick={() => navigate(-1)}>Go Back</Button>
      </>
   );

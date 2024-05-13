@@ -45,6 +45,7 @@ const Videos = () => {
       })
 
     },[id,authUser])
+
     const addVideo = (payload) => {
       setVideos(prev => ({
         ...prev,
@@ -59,8 +60,40 @@ const Videos = () => {
         duration: 3000,
         isClosable: true,
       })
+    }
+    const handleDelete = (video_id) => {
+      axios.delete(`${BASEURL}/courses/${id}/videos/${video_id}`,{
+        headers:{
+          'Authorization' : `Bearer ${authUser.token}`
+        }
+      })
+      .then((res) => {
+        setVideos(prev => ({
+          ...prev,
+          isLoading: false,
+          isError:false,
+          data : prev.data.filter(video => video._id == video_id ? false : true)
+        }))
+        toast({
+          title : 'deleted video',
+          description : res.data.message,
+          status : 'error',
+          duration: 3000,
+          isClosable: true,
+        })
+      })
+      .catch(err => {
+
+        setVideos(prev => ({
+          ...prev,
+          isLoading: false,
+          isError:true
+        }))
+        console.log(err);
+      })
 
     }
+
     if(videos.isLoading) return <Box textAlign={'center'}>
     <Spinner
    thickness='4px'
@@ -74,7 +107,7 @@ const Videos = () => {
     if(videos.isError) return <h2>error</h2>
   return (
     <>
-    <VideoList videos={videos.data} addVideo={addVideo}/>
+    <VideoList videos={videos.data} addVideo={addVideo} handleDelete={handleDelete}/>
     </>
    
   )
