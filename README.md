@@ -121,22 +121,22 @@ Frontend | Backend | Fullstack
 ## Installation Usage:
 1. Clone the repository:
 
-git clone https://github.com/vpavan2105/shop-cart.git
+git clone 
 
 2. Navigate to the project directory:
 
 ### Frontend:
 ```bash
-cd shop-cart/frontend
+cd EduConnect/client
 npm install i
 npm run dev
 ```
 
 ### Backend:
 ```bash
-cd shop-cart/backend
-npm install i
-npm json-server --watch db.json --port 3001
+cd EduConnect/server
+npm run server
+
 ```
 
 3. Access the Application: "Once both the backend and frontend servers are running, you can access the application by opening your web browser and navigating to http://localhost:3000 (assuming the frontend server is running on port 3000). You should see the shop-cart clone interface where you can explore Products from various categories."
@@ -172,18 +172,15 @@ npm json-server --watch db.json --port 3001
 To access authenticated pages, you can use the following credentials:
 
 {
-  "email": "user@example.com",
-  "password": "1234567890"
+  "email": "user@gmail.com",
+  "password": "1234"
 },
-{
-  "email": "admin@gmail.com",
-  "password": "987654321"
-}
+
 
 
 ## Technologies Used:
-- **Frontend:**  TypeScript, React, redux
-- **Backend:** server.js, db.json
+- **Frontend:**  ChakraUI, React, redux
+- **Backend:** Node.js,Express.js,Mongodb
 - **Deployment:** Vercel , Render
 
 
