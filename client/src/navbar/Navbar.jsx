@@ -1,5 +1,3 @@
-
-
 import React, { useContext, useState } from 'react';
 import { Box, Button, Image } from '@chakra-ui/react';
 import { Link, NavLink } from 'react-router-dom';
@@ -15,34 +13,44 @@ const pages = [
 
 function Navbar() {
   const {authUser,logoutUser} = useContext(AuthContext)
-
+  const [isActive, setIsActive] = useState(false);
+  
+  const defaultStyle = { color: 'Black' ,fontWeight: "600" };
+  const activeStyle= { color: "#196ae5",fontWeight: "600",borderBottom : '1px solid #196ae5' }; 
     return (
         <>
-            <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} p={5} boxShadow='base' bg='white' position="sticky"
-      top="0"
-      zIndex="sticky"
-      backgroundColor="white"
-    //   boxShadow="base"
-    //   p={5}
-      >
-                <Image width={{base : "100px",md : "150px" }} display={{base:'none', md : 'inline-block'}} height={{base : "10px",md : "30px"}} src='/logo.png' alt='logo' />
+        <div className="navbar">
+            <div
+            className={`hamburger-menu ${isActive ? "active" : null}`}
+            onClick={() => {
+              
+            setIsActive((prev) => !prev);
+            }}
+            >
+            <span className="bar"></span>
+            <span className="bar"></span>
+            <span className="bar"></span>
+            </div>
+            <div className={`navbar-inner ${isActive ? "active" : null}`}>
+                <Image width={{base : "100px",md : "150px" }} height={{base : "25px",md : "30px"}} src='/logo.png' alt='logo' />
                 {/* <Text fontWeight={800} color={"#196ae5"}>EDU CONNECT...</Text> */}
                 {pages.map((el) => (
                     <NavLink
+                         onClick={() => {
+                        setIsActive((prev) => !prev);
+                         }}
                         key={el.id}
                         to={el.to}
-                        style={({ isActive }) => ({
-                            color: isActive
-                                ? "#196ae5"
-                                : "Black",
-                            fontWeight: "600",
-                        })}
+                        style={({ isActive }) => (isActive ? activeStyle : defaultStyle)}
                     >
                         {el.name}
                     </NavLink>
                 ))}
                 {authUser.token ? <Button
-                    onClick={()=>logoutUser()}
+                    onClick={()=>{
+                      setIsActive((prev) => !prev);
+                        logoutUser()
+                    }}
                     style={{
                         display: "inline-block",
                         padding: "8px 20px",
@@ -55,16 +63,15 @@ function Navbar() {
                     }}
                 >
                     Logout
-                </Button> : <NavLink to='/login'  style={({ isActive }) => ({
-                            color: isActive
-                                ? "#196ae5"
-                                : "Black",
-                            fontWeight: "600",
-                        })}>Login</NavLink>}
-            </Box>
+                </Button> : <NavLink to='/login' onClick={() => {
+                        setIsActive((prev) => !prev);
+                         }}  
+                         style={({ isActive }) => (isActive ? activeStyle : defaultStyle)}
+                         >Login</NavLink>}
+            </div>
+            </div>
         </>
     )
 }
 
 export default Navbar;
-
