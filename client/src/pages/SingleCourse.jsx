@@ -57,6 +57,7 @@ const SingleCourse = () => {
   };
   
   const handleSubmitEnrollment = async () => {
+    
     // Perform enrollment with selected payment method
     await axios.post(
       `${BASEURL}/enrollments/enroll`,
@@ -90,6 +91,7 @@ const SingleCourse = () => {
         <Box pb={4} display={'flex'} justifyContent={'space-between'} >
           <Button w={'49%'} bgColor={'blue.600'} color={'white'} onClick={()=>navigate('assignments')}>assignments</Button>
           <Button w={'50%'} bgColor={'blue.600'} color={'white'} onClick={() => navigate('videos')}>videos</Button>
+          {authUser.role === 'educator' &&  <Button w={'49%'} bgColor={'blue.600'} color={'white'} onClick={() => navigate('submissions')}>submissions</Button>}
         </Box>
           }
       <Box textAlign={"center"} height={"550px"} width={"90%"} margin={"auto"}>

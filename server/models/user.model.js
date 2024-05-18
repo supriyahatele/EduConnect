@@ -7,6 +7,7 @@ const UserSchema = mongoose.Schema({
     interests : { type : [String] },
     role : {type : String , required : true, enum : ['admin', 'student', 'educator'], defaultValue : 'student'},
     age : { type : Number, required : true,},
+    location : {type : String, required : true,}
     
 
 },{

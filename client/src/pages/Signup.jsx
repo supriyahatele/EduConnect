@@ -16,7 +16,8 @@ const Signup = () => {
     email: '',
     interests: [],
     role: 'student',
-    age: ''
+    age: '',
+    location:'',
   });
   const breakpoints = {
     base: '0px',
@@ -108,6 +109,9 @@ const navigate = useNavigate()
                 <option value="student">Student</option>
                 <option value="educator">Educator</option>
               </Select>
+            </FormControl>
+            <FormControl isRequierd>
+                <Input name="location" value={formData.location} onChange={handleChange} placeholder='location' _placeholder={{color:'inherit'}}/>
             </FormControl>
             <FormControl isRequired>
               <FormLabel>Age</FormLabel>

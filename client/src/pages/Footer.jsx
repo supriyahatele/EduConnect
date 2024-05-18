@@ -10,7 +10,7 @@ function Footer() {
           <Image width={"150px"} height={"30px"} src='/logo.png' alt='logo' bg={"#FFF"} mt={4} p={1}/>
           </Center>
           <Container as={Stack} maxW={'full'} py={10} >
-            <SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} spacing={8}>
+            <SimpleGrid columns={{ base: 2, sm: 2, md: 4 }} spacing={8}>
               <Stack align={'flex-start'}>
                 <Heading _hover={{ color: "" }}>Product</Heading>
                 <Box as="a" href={'#'}>
