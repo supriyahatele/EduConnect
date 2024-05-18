@@ -22,6 +22,22 @@ Frontend | Backend | Fullstack
     Backend:https://educonnect-backend-5h8y.onrender.com/
 
 
+## Technologies Used
+- **Backend**:
+  - Node.js
+  - Express.js
+  - MongoDB
+  - JSON Web Tokens (JWT) for authentication
+- **Frontend**:
+  - HTML
+  - CSS
+  - JavaScript
+  - React.js
+- **Other Tools**:
+  - bcrypt.js for password hashing
+  - Redux for state management
+  - Axios for HTTP requests
+
 ## Directory Structure
       Educoonect/
       ├─.
@@ -81,25 +97,38 @@ Frontend | Backend | Fullstack
 
 
 
-### Features:
-- **Search Functionality:** Users can easily find products they're looking for directly from the home page. The search feature allows quick access to desired items for a convenient shopping experience.
+## Features
 
-- **Product Listing and Filtering:** The products page showcases a variety of items and enables users to filter products by subcategories. This helps users to narrow down their search and discover relevant products effortlessly.
+### Authentication
+- Users must log in to access courses.
+- Passwords are securely hashed.
+- Token-based authentication for secure access.
+- Role-based access control:
+  - **Student**: Enroll in courses, submit assignments.
+  - **Educator**: Create courses, assignments, and videos.
 
-- **Cart Management:** Users can add products to their cart for later purchase. The cart functionality allows users to review their selected items, modify quantities, and proceed to checkout seamlessly.
+### Course Management
+- **Student Dashboard**:
+  - View enrolled courses.
+  - Submit assignments.
+- **Educator Dashboard**:
+  - Create courses.
+  - Add assignments and videos to courses.
 
-- **Order Management:** Our platform supports order processing and payment, ensuring a smooth transaction process for users. Users can view their order history and track their purchases conveniently.
+### Course Content
+- **Assignments**:
+  - Students can submit assignments.
+  - Educators can create and assess assignments.
+- **Videos**:
+  - Educators can upload videos for course content.
 
-- **Admin Panel with CRUD Operations:** The admin panel provides comprehensive control over product management with Create, Read, Update, and Delete (CRUD) operations. Admins can easily add new products, update existing ones, and remove items as needed.
-
-- **Order Tracking:** Admins can monitor and manage orders efficiently through the orders page. This includes tracking orders, managing payments, and updating order statuses to keep customers informed.
-
-- **User Account Management:** Users can create accounts, manage their profiles, and view their order history. This enhances the overall user experience and facilitates personalized shopping journeys.
-
-- **Responsive Design:** Our website is designed to be responsive, ensuring optimal user experience across devices. The navigation bar adapts to mobile screens, providing easy access to essential pages through a hamburger menu.
-
-- **Navigation and Pages:** The navigation bar includes links to essential pages such as Home, Cart, Products, Orders, Contact, and Login. This intuitive navigation system enhances user accessibility and engagement.
-- **User Authentication:** Allows registered users have access to add products to cart and purchase the products.
+### Course Navigation
+- **Pagination**:
+  - Navigate through multiple pages of course listings.
+- **Filters**:
+  - Filter courses by price.
+- **Search Functionality**:
+  - Search for courses based on keywords.
 
 
 
@@ -169,12 +198,6 @@ To access authenticated pages, you can use the following credentials:
   "password": "1234"
 },
 
-
-
-## Technologies Used:
-- **Frontend:**  ChakraUI, React, redux
-- **Backend:** Node.js,Express.js,Mongodb
-- **Deployment:** Vercel , Render
 
 
 ## Contributing:

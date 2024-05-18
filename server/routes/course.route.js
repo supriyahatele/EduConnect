@@ -25,6 +25,7 @@ const {
   singleVideo,
 } = require("../controllers/video.controller");
 const { getAssignment, addAssignment, getSingleAssignment } = require("../controllers/assignment.controller");
+const { getCourseSubmissions } = require("../controllers/submission.controller");
 
 // to create course
 // auth,access('educator'),
@@ -60,6 +61,8 @@ courseRouter.get("/:id/getAssignment", auth, getAssignment);
 courseRouter.get("/:id/getAssignment/:assignment_id", auth, getSingleAssignment);
 
 courseRouter.post("/:id/createAssignment",auth,access("educator"),addAssignment);
+
+
 
 module.exports = {
   courseRouter,

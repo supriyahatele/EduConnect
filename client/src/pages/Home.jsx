@@ -21,12 +21,12 @@ function Home() {
         <Flex>
           <Box mt={10}  marginLeft={10}>
           <Center><Text mt={5} fontSize={"18px"} textAlign={'center'} fontWeight={"500"} color={"orangered"}>LEARN WITH</Text></Center>
-          <Center><Text mt={1} m={'auto'} fontSize={"60px"}>India's trusted education platform</Text></Center>
+          <Center><Text mt={1} m={'auto'} textAlign={'center'}  fontSize={"60px"}>India's trusted education platform</Text></Center>
             <Center>
-              <Text color={"#8c7f7b"} mt={5} textAlign={"start"} >Unlock your career's potential with certified courses from top-tier educators worldwide. Broaden your horizons, gain cutting-edge skills, and propel your career to new heights. With our extensive offerings, you'll find the perfect path to success. Power ahead confidently with us by your side.</Text>
+              <Text color={"#8c7f7b"} mt={5} w={'80%'} textAlign={"start"} >Unlock your career's potential with certified courses from top-tier educators worldwide. Broaden your horizons, gain cutting-edge skills, and propel your career to new heights. With our extensive offerings, you'll find the perfect path to success. Power ahead confidently with us by your side.</Text>
             </Center>
             <center>
-                  <Button mt={10} p={"30px 160px"} bg={"#196ae5"} color={"#fff"}>Explore More</Button>
+                  <Button mt={10}  p={{base : "30px",md:"30px 160px"}} bg={"#196ae5"} color={"#fff"}>Explore More</Button>
                 </center>
           </Box>
           <Center >
@@ -55,7 +55,7 @@ function Home() {
             <Center><Text mt={5} fontSize={"18px"} fontWeight={"500"} color={"orangered"}>Here are more reasons</Text></Center>
             <Center><Text mt={1} fontWeight={"800"} fontSize={"60px"}> Why choose Edu Connect courses?</Text></Center>
             <Flex mt={8} flexDir={{base :'column',md : 'row'}} alignItems={'center'}>
-              <Center>
+              <Center >
                 <Image src='/img1.jpg' alt='img' pl={"100px"} transition={"all 1s ease-in-out"} _hover={{ transform: "scale(1.02)" }} />
               </Center>
               <Box width={"50%"} mt={"75px"}>
@@ -118,7 +118,7 @@ function Home() {
                   </Flex>
                 </Center>
                 <center>
-                  <Button mt={10} p={{base : "30px",md:"30px 160px"}}  bg={"#196ae5"} color={"#fff"}>LEARN MORE</Button>
+                  <Button mt={10} mb={10} p={{base : "30px",md:"30px 160px"}}  bg={"#196ae5"} color={"#fff"}>LEARN MORE</Button>
                 </center>
               </Box>
               <Center>

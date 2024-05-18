@@ -15,6 +15,17 @@ const submitAssignment = async(req,res)=>{
        res.status(500).json({error:error})
     }
 }
+
+const getCourseSubmissions = async(req,res) => {
+    try{
+        const submissions = await SubmissionModel.find({});
+        res.status(200).json(submissions)
+
+    }catch(err){
+        res.status(500).json({error:err})
+    }
+}
+
 const getSubmitAssignment = async(req, res) => {
     try{
         const {assignment_id}=req.params;
@@ -50,4 +61,4 @@ const updateSubmission = async(req,res)=>{
     }
 }
 
-module.exports={submitAssignment,updateSubmission,getSubmitAssignment}
+module.exports={submitAssignment,updateSubmission,getCourseSubmissions,getSubmitAssignment}

@@ -1,5 +1,5 @@
 
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCourses } from "../redux/action";
 import { Box, Button, Heading, useDisclosure, Image,Input,Select,Text, useToast, Spinner } from "@chakra-ui/react";
@@ -12,6 +12,7 @@ function Courses() {
   const navigate = useNavigate();
   const { authUser } = useContext(AuthContext)
   const dispatch = useDispatch();
+  const id = useRef(null);
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { isError, isLoading, courses } = useSelector((state) => state.Courses);
   const [page, setPage] = useState(1);
@@ -22,14 +23,15 @@ function Courses() {
   useEffect(() => {
     dispatch(getCourses(page, search, sortBy, sortOrder));
     console.log("useEffect called");
-  }, [search, sortBy, sortOrder, page]);
+  }, [ search,sortBy, sortOrder, page]);
 
   useEffect(() => {
-    const delaySearch = setTimeout(() => {
-      getCourses();
+      clearTimeout(id.current)
+      id.current = setTimeout(() => {
+        getCourses();
     }, 1000); // Adjust the debounce delay as needed (in milliseconds)
 
-    return () => clearTimeout(delaySearch); // Clear timeout on unmount or when searchTerm changes
+    return () => clearTimeout(id.current); // Clear timeout on unmount or when searchTerm changes
   }, [search, sortBy, sortOrder, page]);
 
   const handleSearchChange = (event) => {

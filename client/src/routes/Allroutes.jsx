@@ -18,6 +18,7 @@ import { PrivateRoute } from './PrivateRoute'
 
 import MyCourses from '../components/MyCourses'
 import { QuizData } from '../pages/QuizData'
+import { Submissions } from '../components/Submissions'
 
 
 function Allroutes() {
@@ -49,6 +50,9 @@ function Allroutes() {
                 } />
                 <Route path='/courses/:id/videos' element={<PrivateRoute>
                     <Videos />
+                </PrivateRoute>} />
+                <Route path='/submissions/:id/submissions' element={<PrivateRoute>
+                    <Submissions/>
                 </PrivateRoute>} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />

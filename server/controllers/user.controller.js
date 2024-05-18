@@ -70,8 +70,8 @@ const loginUser = async (req, res) => {
 // registers the user in database only if all fields are excides in req.body then saves in db.
 const registerUser = async (req, res) => {
     try{
-        const {username,email,interests,age,role,password} = req.body;
-        if(username && email && interests.length > 0 && age && role && password){
+        const {username,email,interests,age,role,password,location} = req.body;
+        if(username && email && interests.length > 0 && age && role && password && location){
             bcrypt.hash(password,saltRounds, async(err, hash) => {
                 if(err){
                     return res.status(500).json({error : err.message})
