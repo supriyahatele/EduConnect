@@ -1,4 +1,3 @@
-
 .navbar{
     width: 100%;
   height:70px;
@@ -88,8 +87,5 @@
       }
       .navbar-inner.active {
         top:0px;
-      }
-    
     }
-  
-  
+}

@@ -1,5 +1,3 @@
-
-
 import React, { useContext, useState } from 'react';
 import { Box, Button, Image } from '@chakra-ui/react';
 import { Link, NavLink } from 'react-router-dom';
@@ -77,4 +75,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
