@@ -28,22 +28,23 @@ const { getAssignment, addAssignment, getSingleAssignment } = require("../contro
 const { getCourseSubmissions } = require("../controllers/submission.controller");
 
 // to create course
-// auth,access('educator'),
-courseRouter.post("/", createCourse);
 
-// to get all the users -- access to admin only
-courseRouter.get("/", allCourse);
+courseRouter.post("/",auth,access('educator'), createCourse);
 
+// to get all  courses  only for admin
+courseRouter.get("/",auth,access('admin'), allCourse);
+
+// to get all  courses of specific student
 courseRouter.get('/mycourses',auth,getMyCourses)
 
-// to get profile of the user -- user details
+// to get course details
 courseRouter.get("/:id",courseById);
 
-// to update the user details
+// to update the course details
 
 courseRouter.patch("/:id",auth,access('educator'), updateCourse);
 
-// to delete the user
+// to delete the course
 courseRouter.delete("/:id",auth,access('educator'), deleteCourse);
 
 courseRouter.get("/:id/videos",auth, allVideos);
