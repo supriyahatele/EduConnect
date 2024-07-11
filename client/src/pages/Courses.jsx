@@ -22,13 +22,13 @@ function Courses() {
   const toast = useToast()
   useEffect(() => {
     dispatch(getCourses(page, search, sortBy, sortOrder));
-    console.log("useEffect called");
+    // console.log("useEffect called");
   }, [ search,sortBy, sortOrder, page]);
 
   useEffect(() => {
       clearTimeout(id.current)
       id.current = setTimeout(() => {
-        getCourses();
+     dispatch(getCourses(page, search, sortBy, sortOrder));
     }, 2000); 
 
     return () => clearTimeout(id.current); // Clear timeout on unmount or when searchTerm changes
