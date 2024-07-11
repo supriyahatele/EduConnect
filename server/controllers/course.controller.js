@@ -73,14 +73,11 @@ const courseById =  async (req, res) => {
 const createCourse = async (req, res) => {
     try{
         const {courseName,educator,price,techStack,imageUrl,rating,reviews} = req.body;
-        // 
-
-        console.log(req.body);
+      
         if(courseName && educator && techStack.length > 0 && price && imageUrl && rating && reviews ){
-            // let uploadedFileURL= await uploadFile(file)
-            // console.log(uploadedFileURL)
+            
             const newCourse = new CourseModel({...req.body,students:[]})
-            // console.log(newUser)
+          
             await newCourse.save(); 
             
 
@@ -132,40 +129,6 @@ const deleteCourse = async ( req,res) => {
     }
 }
 
-
-const s3Client = new S3Client({
-    region: "ap-southeast-2",
-    credentials: {
-        accessKeyId: process.env.ACCESSKEYID,
-        secretAccessKey: process.env.ACCESSKEY,
-    }
-})
-
-
-async function uploadFile(file) {
-    try {
-        // Prepare parameters for uploading the file
-        const uploadParams = {
-            Bucket: "educonnect",
-            Key: "CourseImage/" + file.originalname,
-            Body: file.buffer 
-        };
-
-        // Upload the file to S3
-        const command = new PutObjectCommand(uploadParams);
-        const response = await s3Client.send(command);
-
-        console.log(response);
-        console.log("File uploaded successfully");
-
-        return response.Location; // Return the URL of the uploaded file
-    } catch (error) {
-        console.error("Error uploading file:", error);
-        throw error;
-    }
-}
-
-
 module.exports = {
     allCourse,
     createCourse,
@@ -175,4 +138,51 @@ module.exports = {
     updateCourse,
     uploadFile
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const s3Client = new S3Client({
+//     region: "ap-southeast-2",
+//     credentials: {
+//         accessKeyId: process.env.ACCESSKEYID,
+//         secretAccessKey: process.env.ACCESSKEY,
+//     }
+// })
+
+
+// async function uploadFile(file) {
+//     try {
+//         // Prepare parameters for uploading the file
+//         const uploadParams = {
+//             Bucket: "educonnect",
+//             Key: "CourseImage/" + file.originalname,
+//             Body: file.buffer 
+//         };
+
+//         // Upload the file to S3
+//         const command = new PutObjectCommand(uploadParams);
+//         const response = await s3Client.send(command);
+
+//         console.log(response);
+//         console.log("File uploaded successfully");
+
+//         return response.Location; // Return the URL of the uploaded file
+//     } catch (error) {
+//         console.error("Error uploading file:", error);
+//         throw error;
+//     }
+// }
+
+
+
 
