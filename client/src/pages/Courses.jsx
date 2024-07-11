@@ -29,7 +29,7 @@ function Courses() {
       clearTimeout(id.current)
       id.current = setTimeout(() => {
         getCourses();
-    }, 1000); // Adjust the debounce delay as needed (in milliseconds)
+    }, 2000); 
 
     return () => clearTimeout(id.current); // Clear timeout on unmount or when searchTerm changes
   }, [search, sortBy, sortOrder, page]);
