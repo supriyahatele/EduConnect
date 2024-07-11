@@ -79,12 +79,12 @@ const createCourse = async (req, res) => {
         if(courseName && educator && techStack.length > 0 && price && imageUrl && rating && reviews ){
             // let uploadedFileURL= await uploadFile(file)
             // console.log(uploadedFileURL)
-            const newUser = new CourseModel({...req.body,students:[]})
+            const newCourse = new CourseModel({...req.body,students:[]})
             // console.log(newUser)
-            await newUser.save(); 
+            await newCourse.save(); 
             
 
-        res.status(201).json(newUser)
+        res.status(201).json(newCourse)
             
         }else{
             res.status(400).json({message : 'all fields are required'})
